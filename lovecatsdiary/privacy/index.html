@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隐私政策 · 喵咪日记</title>
+<meta name="description" content="喵咪日记隐私政策 — 我们不收集任何个人数据，所有信息仅存储在您的设备本地。">
+<style>
+:root {
+  --primary: #5C8B72; --primary-light: #8FBEA4; --primary-bg: #DCEDE2;
+  --bg: #F7F3EE; --bg-card: #FFFFFF; --text: #2C2C2C;
+  --text-sub: #6B6B6B; --text-muted: #9A9A9A;
+  --radius: 16px; --shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.7;
+}
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,243,238,0.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(92,139,114,0.12);
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 17px; color: var(--primary);
+  text-decoration: none;
+}
+.nav-icon { width:32px; height:32px; border-radius:8px; background:var(--primary-bg); display:flex; align-items:center; justify-content:center; font-size:18px; }
+.nav-back { color:var(--primary); text-decoration:none; font-size:14px; font-weight:500; }
+.nav-back:hover { text-decoration:underline; }
+
+.page-header {
+  background: linear-gradient(135deg, #EBF4EE 0%, #F7F3EE 100%);
+  padding: 60px 24px 40px;
+  text-align: center;
+}
+.page-header .badge {
+  display:inline-block; background:var(--primary-bg); color:var(--primary);
+  font-size:13px; font-weight:700; padding:6px 16px; border-radius:40px; margin-bottom:16px;
+}
+.page-header h1 { font-size:clamp(28px,5vw,42px); font-weight:800; margin-bottom:12px; }
+.page-header p { font-size:15px; color:var(--text-sub); }
+
+.content { max-width:760px; margin:0 auto; padding:48px 24px 80px; }
+
+.section-block {
+  background:var(--bg-card); border-radius:var(--radius);
+  padding:28px 32px; margin-bottom:20px;
+  box-shadow:var(--shadow);
+}
+
+.section-block h2 {
+  font-size:18px; font-weight:700; color:var(--primary);
+  margin-bottom:14px; padding-bottom:12px;
+  border-bottom:1px solid var(--primary-bg);
+  display:flex; align-items:center; gap:8px;
+}
+
+.section-block h2 .icon { font-size:20px; }
+
+.section-block p { font-size:15px; color:var(--text-sub); margin-bottom:12px; }
+.section-block p:last-child { margin-bottom:0; }
+
+.section-block ul { list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.section-block li {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:15px; color:var(--text-sub);
+}
+.section-block li::before {
+  content:''; display:block;
+  width:6px; height:6px; border-radius:50%; background:var(--primary-light);
+  margin-top:8px; flex-shrink:0;
+}
+
+.highlight-box {
+  background:var(--primary-bg); border-radius:12px;
+  padding:16px 20px; margin:12px 0;
+  font-size:15px; color:var(--primary); font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+
+.permission-table { width:100%; border-collapse:collapse; margin-top:8px; }
+.permission-table th {
+  text-align:left; font-size:13px; font-weight:700; color:var(--text-muted);
+  text-transform:uppercase; letter-spacing:0.5px;
+  padding:8px 12px; background:#F5F5F5; border-radius:8px 8px 0 0;
+}
+.permission-table td { padding:12px; font-size:14px; border-bottom:1px solid #F0F0F0; }
+.permission-table td:first-child { font-weight:600; color:var(--text); width:35%; }
+.permission-table tr:last-child td { border-bottom:none; }
+
+.update-date {
+  text-align:center; color:var(--text-muted); font-size:13px; margin-bottom:32px;
+}
+
+footer {
+  background:#1E2420; color:rgba(255,255,255,0.5);
+  padding:28px 24px; text-align:center; font-size:13px;
+}
+footer a { color:rgba(255,255,255,0.55); text-decoration:none; margin:0 8px; }
+footer a:hover { color:white; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <div class="nav-icon">🐱</div>喵咪日记
+  </a>
+  <a href="index.html" class="nav-back">← 返回首页</a>
+</nav>
+
+<div class="page-header">
+  <div class="badge">🔒 隐私优先</div>
+  <h1>隐私政策</h1>
+  <p>我们深信隐私是基本权利。本文档说明喵咪日记如何处理您的数据。</p>
+</div>
+
+<div class="content">
+  <p class="update-date">最后更新：2025年4月 · 版本 1.0</p>
+
+  <div class="section-block">
+    <h2><span class="icon">📋</span>核心承诺</h2>
+    <div class="highlight-box">
+      🎉 喵咪日记不收集、不存储、不传输任何个人数据至任何服务器。
+    </div>
+    <p>所有您在应用中输入的猫咪信息、日常记录、照片等内容，均完全存储在您的 iPhone/iPad 设备本地，不会通过网络发送至任何地方。</p>
+    <p>我们没有自己的服务器，也没有任何后台系统来接收用户数据。</p>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">📦</span>我们收集什么数据</h2>
+    <p><strong>答案是：什么都不收集。</strong></p>
+    <ul>
+      <li>不收集您的姓名、邮箱或任何联系方式</li>
+      <li>不收集设备标识符（如 IDFA、IDFV）</li>
+      <li>不收集位置信息</li>
+      <li>不收集使用行为数据或分析数据</li>
+      <li>不集成任何第三方统计 SDK（如 Firebase、Mixpanel 等）</li>
+      <li>不使用广告追踪</li>
+    </ul>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">📱</span>应用权限说明</h2>
+    <p>喵咪日记可能申请以下系统权限，所有权限仅用于您明确触发的功能：</p>
+    <table class="permission-table">
+      <tr>
+        <th>权限</th>
+        <th>用途</th>
+      </tr>
+      <tr>
+        <td>通知（推送）</td>
+        <td>发送您设置的喂食、用药、护理提醒。您可随时在系统设置中关闭。不用于营销推送。</td>
+      </tr>
+      <tr>
+        <td>相册 / 照片库</td>
+        <td>选择猫咪头像图片。选择的图片仅保存在本地数据库中，不上传。</td>
+      </tr>
+    </table>
+    <p style="margin-top:14px;">如果您拒绝某项权限，对应功能将不可用，但不影响其他功能的正常使用。</p>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">💾</span>数据存储与安全</h2>
+    <ul>
+      <li>所有数据使用 Apple 的 CoreData 框架存储在设备本地</li>
+      <li>数据随设备的文件系统加密（启用 iOS 设备密码后自动加密）</li>
+      <li>数据会随 iCloud 备份一起备份（如您开启了 iCloud 备份），此部分由 Apple 负责安全管理</li>
+      <li>您可以通过「设置 → 导出数据」功能导出完整数据，也可以通过「导入数据」在新设备上恢复</li>
+      <li>删除应用将永久删除所有本地数据</li>
+    </ul>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">🔗</span>第三方服务</h2>
+    <p>喵咪日记<strong>不集成任何第三方分析、广告或社交网络 SDK</strong>。</p>
+    <p>唯一涉及的外部系统是 Apple 的操作系统本身，包括：</p>
+    <ul>
+      <li>Apple 推送通知服务（APNs）— 用于本地推送通知的调度，不经过任何第三方服务器</li>
+      <li>App Store — 用于应用分发，适用 Apple 的隐私政策</li>
+    </ul>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">👶</span>儿童隐私</h2>
+    <p>喵咪日记不针对13岁以下儿童，也不会有意收集儿童个人信息。由于本应用本就不收集任何数据，该条款实际上已自然满足。</p>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">🔄</span>隐私政策变更</h2>
+    <p>如果我们对隐私政策进行重大变更，将通过应用内更新说明或本页面通知您。</p>
+    <p>继续使用本应用即表示您接受最新版本的隐私政策。我们建议定期查阅本页面。</p>
+  </div>
+
+  <div class="section-block">
+    <h2><span class="icon">📬</span>联系我们</h2>
+    <p>如果您对本隐私政策有任何疑问，欢迎联系我们：</p>
+    <p>
+      <strong>邮箱：</strong>
+      <a href="mailto:fuyexx@gmail.com" style="color:var(--primary)">fuyexx@gmail.com</a>
+    </p>
+    <p>我们承诺在合理时间内回复您的咨询。</p>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">首页</a>
+  <a href="privacy.html">隐私政策</a>
+  <a href="legal.html">使用条款</a>
+  <a href="faq.html">常见问题</a>
+  <br><br>
+  © 2025 喵咪日记. All rights reserved.
+</footer>
+
+</body>
+</html>
