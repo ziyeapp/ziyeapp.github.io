@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>喵咪日记 · 猫咪日常记录</title>
-<meta name="description" content="专为爱猫人士打造的本地记录工具。记录喂食、用药、护理、体重、血压和日常观察，所有数据仅保存在设备本机。">
-<meta property="og:title" content="喵咪日记 · 猫咪日常记录">
-<meta property="og:description" content="专为爱猫人士打造的本地记录工具">
+<title>爱猫日记 · 宠物喂食护理用药记录与追踪</title>
+<meta name="description" content="记录猫咪的日常喂食、用药、护理、体重、血压、大小便、异常事件，方便专项追踪、分析、导出数据。">
+<meta property="og:title" content="爱猫日记 · 猫咪日常记录">
+<meta property="og:description" content="爱猫日记，就是为这些零碎、琐碎、容易忘记的日常设计的本地记录工具。">
 <meta property="og:type" content="website">
 <style>
 :root {
@@ -28,7 +28,7 @@
   --text: #2C2C2C;
   --text-sub: #6B6B6B;
   --text-muted: #9A9A9A;
-  --radius: 20px;
+  --radius: 8px;
   --shadow: 0 4px 24px rgba(0,0,0,0.08);
   --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
 }
@@ -65,10 +65,9 @@ nav {
 }
 
 .nav-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: var(--primary-bg);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
+  width: 34px; height: 34px; border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(92,139,114,0.16);
+  object-fit: cover;
 }
 
 .nav-links {
@@ -108,22 +107,33 @@ nav {
   min-height: 100vh;
   padding-top: 60px;
   display: flex; align-items: center;
-  background: linear-gradient(160deg, #F7F3EE 0%, #EBF4EE 50%, #F0EDF9 100%);
+  background: #F7F3EE;
   position: relative; overflow: hidden;
+  isolation: isolate;
 }
 
 .hero::before {
   content: '';
-  position: absolute; top: -200px; right: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(92,139,114,0.1) 0%, transparent 70%);
-  border-radius: 50%;
+  position: absolute; inset: 60px 0 0 42%;
+  background: #EAF6EE;
+  opacity: 0.78;
+  z-index: -1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, #F7F3EE 0%, rgba(247,243,238,0.96) 40%, rgba(220,237,226,0.82) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 58%);
+  z-index: -2;
 }
 
 .hero-inner {
-  max-width: 1100px; margin: 0 auto; padding: 60px 24px;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
+  width: 100%;
+  max-width: 1120px; margin: 0 auto; padding: 64px 24px 56px;
+  display: grid; grid-template-columns: 0.92fr 1.08fr;
+  gap: 56px; align-items: center;
 }
 
 .hero-badge {
@@ -137,7 +147,7 @@ nav {
 .hero h1 {
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 800; line-height: 1.2;
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
   margin-bottom: 16px;
 }
 
@@ -180,9 +190,59 @@ nav {
 
 .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
+.hero-showcase {
+  position: relative;
+  min-height: 590px;
+  display: grid;
+  place-items: center;
+}
+
+.hero-logo-tile {
+  position: absolute;
+  left: 24px; top: 82px;
+  width: 132px; height: 132px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(92,139,114,0.22);
+  transform: rotate(-6deg);
+  background: var(--primary-bg);
+  z-index: 4;
+}
+
+.hero-logo-tile img,
+.cat-avatar img,
+.cta-logo img,
+.footer-logo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cat-stack {
+  position: absolute;
+  left: 10px; bottom: 66px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 3;
+}
+
+.cat-avatar {
+  width: 58px; height: 58px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+  border: 3px solid rgba(255,255,255,0.92);
+}
+
+.cat-avatar:nth-child(2) { margin-left: 28px; }
+.cat-avatar:nth-child(3) { margin-left: 4px; }
+
 .hero-phone {
   display: flex; justify-content: center;
   position: relative;
+  z-index: 2;
 }
 
 .phone-frame {
@@ -210,9 +270,27 @@ nav {
 }
 
 .phone-content {
-  padding: 36px 12px 12px;
   height: 100%;
-  display: flex; flex-direction: column; gap: 6px;
+}
+
+.screenshot-carousel {
+  height: 100%;
+  overflow: hidden;
+}
+
+.screenshot-track {
+  height: 100%;
+  display: flex;
+  width: max-content;
+  animation: screenshotSlide 24s linear infinite;
+}
+
+.screenshot-track img {
+  width: 236px;
+  height: 100%;
+  flex: 0 0 236px;
+  object-fit: cover;
+  display: block;
 }
 
 .phone-header {
@@ -233,7 +311,7 @@ nav {
 }
 
 .tl-card {
-  flex: 1; background: white; border-radius: 10px;
+  flex: 1; background: white; border-radius: 8px;
   padding: 7px 9px;
   box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
@@ -245,7 +323,7 @@ nav {
 .phone-float {
   position: absolute;
   background: white;
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 10px 14px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   white-space: nowrap;
@@ -267,6 +345,14 @@ nav {
 /* ── FEATURES ── */
 .section {
   padding: 80px 24px;
+}
+
+.section,
+.types-section,
+.stats-section,
+.privacy-section,
+.cta-section {
+  scroll-margin-top: 72px;
 }
 
 .section-inner {
@@ -309,7 +395,7 @@ nav {
 .feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
 .feat-icon {
-  width: 48px; height: 48px; border-radius: 14px;
+  width: 48px; height: 48px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; margin-bottom: 16px;
 }
@@ -324,8 +410,15 @@ nav {
 
 /* ── RECORD TYPES ── */
 .types-section {
-  background: linear-gradient(135deg, #EBF4EE 0%, #F7F3EE 100%);
+  background: #EBF4EE;
   padding: 80px 24px;
+}
+
+.records-layout {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
 }
 
 .types-grid {
@@ -337,7 +430,7 @@ nav {
 
 .type-chip {
   background: white;
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 14px 16px;
   display: flex; align-items: center; gap: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.06);
@@ -347,15 +440,105 @@ nav {
 .type-chip:hover { transform: translateY(-2px); }
 
 .type-dot {
-  width: 36px; height: 36px; border-radius: 10px;
+  width: 36px; height: 36px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 17px; flex-shrink: 0;
+  flex-shrink: 0;
+  color: currentColor;
 }
+
+.type-dot svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.type-feed { background:#FFF4C9; color:#D18754; }
+.type-med { background:#EDE8F8; color:#9580CC; }
+.type-care { background:#DCEDE2; color:#5C8B72; }
+.type-weight { background:#DCEDEE; color:#4D8D97; }
+.type-bp { background:#F6DFDB; color:#B45D58; }
+.type-stool { background:#F4E6C8; color:#8A6E35; }
+.type-event { background:#FBE9D8; color:#D4762E; }
+.type-mood { background:#FFF4C9; color:#D18754; }
+.type-vet { background:#DCEDEE; color:#4D8D97; }
 
 .type-name { font-size: 14px; font-weight: 600; }
 .type-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 
 /* ── STATS ── */
+.records-visual {
+  min-height: 420px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.records-logo {
+  position: absolute;
+  top: 0; left: 42px;
+  width: 138px; height: 138px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 18px 42px rgba(92,139,114,0.18);
+  transform: rotate(-7deg);
+}
+
+.summary-panel {
+  width: min(320px, 100%);
+  background:white;
+  border-radius: var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+  text-align:left;
+  position: relative;
+  z-index: 2;
+}
+
+.summary-eyebrow {
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:12px;
+}
+
+.summary-list {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.summary-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.summary-row span:first-child {
+  font-size:13px;
+  color:var(--text-sub);
+}
+
+.summary-row span:last-child {
+  font-size:14px;
+  font-weight:700;
+}
+
+.records-cats {
+  position: absolute;
+  right: 24px; bottom: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.records-cats .cat-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+}
+
 .stats-section { padding: 60px 24px; }
 
 .stats-inner {
@@ -430,6 +613,14 @@ nav {
   max-width: 600px; margin: 0 auto;
 }
 
+.cta-logo {
+  width: 92px; height: 92px;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 0 auto 18px;
+  box-shadow: 0 12px 34px rgba(92,139,114,0.22);
+}
+
 .cta-section h2 {
   font-size: clamp(28px, 5vw, 42px);
   font-weight: 800; margin-bottom: 16px;
@@ -476,7 +667,18 @@ footer {
 .footer-brand { max-width: 280px; }
 
 .footer-brand .name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px;
+}
+
+.footer-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .footer-brand p {
@@ -530,21 +732,82 @@ footer {
 @media (max-width: 900px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .records-layout { grid-template-columns: 1fr; gap: 40px; }
+  .records-visual { min-height: 360px; }
 }
 
 @media (max-width: 720px) {
   .nav-links, .nav-dl { display: none; }
   .hamburger { display: flex; }
 
+  .hero {
+    min-height: auto;
+  }
+
+  .hero::before {
+    inset: 280px -120px 0 20%;
+    background-position: right top;
+    opacity: 0.11;
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(180deg, #F7F3EE 0%, rgba(247,243,238,0.96) 46%, rgba(220,237,226,0.74) 100%);
+  }
+
   .hero-inner {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 40px;
     padding: 40px 20px;
+    overflow: hidden;
   }
 
-  .hero p { margin: 0 auto 32px; }
-  .hero-btns { justify-content: center; }
+  .hero-inner > * {
+    min-width: 0;
+  }
+
+  .hero p {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto 28px;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-btns {
+    width: 100%;
+    max-width: 270px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    justify-content: center;
+    width: 100%;
+    padding: 13px 18px;
+    font-size: 15px;
+  }
+
+  .hero-showcase { min-height: 520px; }
+  .hero-logo-tile {
+    width: 116px;
+    height: 116px;
+    left: 8px;
+    right: auto;
+  }
+  .cat-stack {
+    left: 14px;
+    bottom: 62px;
+  }
+  .cat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
 
   .phone-float-1, .phone-float-2 { display: none; }
 
@@ -556,6 +819,16 @@ footer {
 
   .privacy-inner { flex-direction: column; text-align: center; }
   .privacy-items { justify-content: center; }
+  .records-logo {
+    width: 104px;
+    height: 104px;
+    border-radius: 22px;
+    left: 12px;
+  }
+  .records-cats {
+    right: 8px;
+    bottom: 0;
+  }
 
   .footer-top { flex-direction: column; gap: 32px; }
   .footer-bottom { flex-direction: column; text-align: center; }
@@ -571,7 +844,16 @@ footer {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up { opacity: 0; animation: fadeUp 0.6s ease forwards; }
+@keyframes screenshotSlide {
+  0%, 14% { transform: translateX(0); }
+  20%, 34% { transform: translateX(-236px); }
+  40%, 54% { transform: translateX(-472px); }
+  60%, 74% { transform: translateX(-708px); }
+  80%, 94% { transform: translateX(-944px); }
+  100% { transform: translateX(0); }
+}
+
+.fade-up { opacity: 1; animation: none; }
 .fade-up.d1 { animation-delay: 0.1s; }
 .fade-up.d2 { animation-delay: 0.2s; }
 .fade-up.d3 { animation-delay: 0.3s; }
@@ -583,8 +865,8 @@ footer {
 <!-- ── NAV ── -->
 <nav>
   <a href="index.html" class="nav-brand">
-    <div class="nav-icon">🐱</div>
-    喵咪日记
+    <img class="nav-icon" src="assets/logo.png" alt="爱猫日记 Logo">
+    爱猫日记
   </a>
   <ul class="nav-links">
     <li><a href="#features">功能</a></li>
@@ -592,7 +874,7 @@ footer {
     <li><a href="faq.html">常见问题</a></li>
     <li><a href="privacy.html">隐私政策</a></li>
   </ul>
-  <a href="#download" class="nav-dl">免费下载</a>
+  <a href="#download" class="nav-dl">App Store</a>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -604,16 +886,16 @@ footer {
   <a href="faq.html">常见问题</a>
   <a href="privacy.html">隐私政策</a>
   <a href="legal.html">使用条款</a>
-  <a href="#download" onclick="toggleMenu()" style="color:var(--primary); margin-top: 8px;">免费下载 →</a>
+  <a href="#download" onclick="toggleMenu()" style="color:var(--primary); margin-top: 8px;">App Store →</a>
 </div>
 
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge fade-up">🐾 猫咪本地记录 App</div>
-      <h1 class="fade-up d1">把对它的爱，<br>变成一份<em>日常记录</em></h1>
-      <p class="fade-up d2">记录喂食、用药、护理、体重、血压和日常观察。专为爱猫人士设计，所有数据仅保存在设备本机。</p>
+      <div class="hero-badge fade-up">猫咪护理时间轴</div>
+      <h1 class="fade-up d1">零碎、琐碎、<br>容易忘记的<em>日常</em></h1>
+      <p class="fade-up d2">爱猫日记，就是为这些零碎、琐碎、容易忘记的日常设计的本地记录工具。它把你和猫咪相处的每一个细节，整理成你随时能翻回去的一页页记录。</p>
       <div class="hero-btns fade-up d3">
         <a href="#download" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -623,65 +905,41 @@ footer {
       </div>
     </div>
 
-    <div class="hero-phone fade-up d4">
-      <div class="phone-frame">
-        <div class="phone-inner">
-          <div class="phone-notch"></div>
-          <div class="phone-content">
-            <div class="phone-header">
-              <span class="phone-title">今日记录</span>
-              <span class="phone-date">橘橘 · 今天</span>
-            </div>
-            <div class="timeline-item">
-              <div class="tl-dot" style="background:#D18754"></div>
-              <div class="tl-card">
-                <div class="tl-time">08:30</div>
-                <div class="tl-name">喂食</div>
-                <div class="tl-detail">希尔斯处方粮 60g</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="tl-dot" style="background:#9580CC"></div>
-              <div class="tl-card">
-                <div class="tl-time">10:00</div>
-                <div class="tl-name">用药</div>
-                <div class="tl-detail">安普诺 · ¼片</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="tl-dot" style="background:#5C8B72"></div>
-              <div class="tl-card">
-                <div class="tl-time">14:00</div>
-                <div class="tl-name">护理</div>
-                <div class="tl-detail">皮下补液 120ml</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="tl-dot" style="background:#4D8D97"></div>
-              <div class="tl-card">
-                <div class="tl-time">16:15</div>
-                <div class="tl-name">体重</div>
-                <div class="tl-detail">3.82 kg ↔ 目标 3.9</div>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="tl-dot" style="background:#B45D58"></div>
-              <div class="tl-card">
-                <div class="tl-time">17:30</div>
-                <div class="tl-name">血压</div>
-                <div class="tl-detail">SBP 148 / DBP 95</div>
+    <div class="hero-showcase fade-up d4">
+      <div class="hero-logo-tile">
+        <img src="assets/logo.png" alt="爱猫日记 App 图标">
+      </div>
+      <div class="cat-stack" aria-hidden="true">
+        <div class="cat-avatar"><img src="assets/cat-orange.png" alt=""></div>
+        <div class="cat-avatar"><img src="assets/cat-ragdoll.png" alt=""></div>
+        <div class="cat-avatar"><img src="assets/cat-black.png" alt=""></div>
+      </div>
+      <div class="hero-phone">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-notch"></div>
+            <div class="phone-content">
+              <div class="screenshot-carousel" aria-label="爱猫日记应用截图轮播">
+                <div class="screenshot-track">
+                  <img src="assets/screenshots/1.png" alt="爱猫日记截图 1">
+                  <img src="assets/screenshots/2.png" alt="爱猫日记截图 2">
+                  <img src="assets/screenshots/3.png" alt="爱猫日记截图 3">
+                  <img src="assets/screenshots/4.png" alt="爱猫日记截图 4">
+                  <img src="assets/screenshots/5.png" alt="爱猫日记截图 5">
+                  <img src="assets/screenshots/1.png" alt="">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="phone-float phone-float-1">
-        <div class="float-label">上次喂食</div>
-        <div class="float-val">3小时前 🍽</div>
+        <div class="float-label">趋势页</div>
+        <div class="float-val">让长期变化看得见</div>
       </div>
       <div class="phone-float phone-float-2">
-        <div class="float-label">今日体重</div>
-        <div class="float-val">3.82 kg 📊</div>
+        <div class="float-label">本地存储</div>
+        <div class="float-val">无需账号</div>
       </div>
     </div>
   </div>
@@ -691,39 +949,39 @@ footer {
 <section class="section" id="features">
   <div class="section-inner">
     <div class="section-label">核心功能</div>
-    <h2 class="section-title">照顾它，从来不是小事</h2>
-    <p class="section-sub">无论是日常护理还是多猫记录，喵咪日记都能帮你把信息整理清楚。</p>
+    <h2 class="section-title">一些很贴心的细节</h2>
+    <p class="section-sub">一次记录可按多种维度查看数据，支持多猫管理，多种格式数据导出。</p>
 
     <div class="features-grid">
       <div class="feat-card">
-        <div class="feat-icon" style="background:#FDE8D4">📋</div>
-        <div class="feat-name">今日时间轴</div>
-        <div class="feat-desc">所有记录按时间排列，喂食、用药、护理一眼看完。清晰掌握今天发生的每一件事。</div>
+        <div class="feat-icon" style="background:#FFF4C9">📋</div>
+        <div class="feat-name">一键记录，覆盖全部日常</div>
+        <div class="feat-desc">喂食、用药、护理、体重、血压、大小便、异常事件和检查记录，串起完整的一天。</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon" style="background:#EDE8F8">⏰</div>
-        <div class="feat-name">多重智能提醒</div>
-        <div class="feat-desc">每个项目设置多个提醒时间，支持按星期配置。不论喂药多复杂，都不会漏掉。</div>
+        <div class="feat-name">多重提醒，按需配置</div>
+        <div class="feat-desc">每个食物、药品、护理项目都能设多个提醒时间，按星期单独开关。</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon" style="background:#DCEDEE">📊</div>
-        <div class="feat-name">趋势图表</div>
-        <div class="feat-desc">体重、血压、自定义指标图表化展示。需要回顾时，不用再翻聊天记录。</div>
+        <div class="feat-name">趋势页</div>
+        <div class="feat-desc">体重曲线、热量摄入、血压、自定义检查指标，按 7 天 / 30 天 / 半年 / 1 年切换。</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon" style="background:#DCEDE2">🐱</div>
-        <div class="feat-name">多猫独立档案</div>
-        <div class="feat-desc">支持多只猫咪，每只独立档案、独立记录。设定体重目标和热量目标，方便长期整理。</div>
+        <div class="feat-name">多只猫，每只都有自己的小档案</div>
+        <div class="feat-desc">头像、生日、体重基线、热量目标、慢性病名称、确诊日期，每只猫独立的设置和记录。</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon" style="background:#F8EDC9">🔧</div>
-        <div class="feat-name">完全自定义内容</div>
-        <div class="feat-desc">食物、药品、护理项目、体检字段全部可自定义，完全适配你家猫咪的独特需求。</div>
+        <div class="feat-name">按类型回顾</div>
+        <div class="feat-desc">所有状态记录像日记一样滚动，所有异常事件按日期分组，发作频次一目了然。</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon" style="background:#F6DFDB">💾</div>
-        <div class="feat-name">数据导出备份</div>
-        <div class="feat-desc">支持完整数据导出，换机或系统迁移无需担心数据丢失。所有数据仅存储在本地。</div>
+        <div class="feat-name">数据本地存储，完整备份不丢失</div>
+        <div class="feat-desc">一键导出完整备份，含猫咪、配置、全部记录。</div>
       </div>
     </div>
   </div>
@@ -732,73 +990,80 @@ footer {
 <!-- ── RECORD TYPES ── -->
 <section class="types-section" id="records">
   <div class="section-inner">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div class="records-layout">
       <div>
         <div class="section-label">记录类型</div>
-        <h2 class="section-title">9种记录，覆盖全部日常</h2>
-        <p class="section-sub">从日常喂食到专业体检，点击 + 即可快速记录，整个过程不超过30秒。</p>
+        <h2 class="section-title">9类记录，串起完整的一天</h2>
+        <p class="section-sub">记录猫咪的日常喂食、用药、护理、体重、血压、大小便、异常事件，方便专项追踪、分析、导出数据。</p>
 
         <div class="types-grid">
           <div class="type-chip">
-            <div class="type-dot" style="background:#FDE8D4">🍽</div>
-            <div><div class="type-name">喂食</div><div class="type-sub">食量与食物</div></div>
+            <div class="type-dot type-feed"><svg viewBox="0 0 24 24"><path d="M4 11.5h16M5 11.5c0 4.5 3 7.5 7 7.5s7-3 7-7.5M9 19v2M15 19v2"/><circle cx="8.5" cy="7" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="5.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+            <div><div class="type-name">喂食</div><div class="type-sub">分量与摄入比例</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#EDE8F8">💊</div>
-            <div><div class="type-name">用药</div><div class="type-sub">药品与剂量</div></div>
+            <div class="type-dot type-med"><svg viewBox="0 0 24 24"><path d="M5.5 15.5 15.5 5.5a4 4 0 0 1 5.7 5.7l-10 10a4 4 0 0 1-5.7-5.7Z"/><path d="m9 12 3 3"/></svg></div>
+            <div><div class="type-name">用药</div><div class="type-sub">独立剂量备注</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#DCEDE2">🩺</div>
-            <div><div class="type-name">护理</div><div class="type-sub">补液梳毛等</div></div>
+            <div class="type-dot type-care"><svg viewBox="0 0 24 24"><path d="M12 20.3C7 16.2 4 13.8 4 10.3A4.4 4.4 0 0 1 8.5 5.8c1.5 0 2.8.7 3.5 1.8.7-1.1 2-1.8 3.5-1.8A4.4 4.4 0 0 1 20 10.3c0 3.5-3 5.9-8 10Z"/><path d="M12 11v3M10.5 12.5h3"/></svg></div>
+            <div><div class="type-name">护理</div><div class="type-sub">全部由你自定义</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#DCEDEE">⚖️</div>
-            <div><div class="type-name">体重</div><div class="type-sub">趋势追踪</div></div>
+            <div class="type-dot type-weight"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M8 9a4 4 0 0 1 8 0M12 9v2"/><circle cx="12" cy="14.5" r="2"/></svg></div>
+            <div><div class="type-name">体重</div><div class="type-sub">趋势自动整理</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#F6DFDB">❤️</div>
-            <div><div class="type-name">血压</div><div class="type-sub">多状态记录</div></div>
+            <div class="type-dot type-bp"><svg viewBox="0 0 24 24"><path d="M12 20.3C7 16.2 4 13.8 4 10.3A4.4 4.4 0 0 1 8.5 5.8c1.5 0 2.8.7 3.5 1.8.7-1.1 2-1.8 3.5-1.8A4.4 4.4 0 0 1 20 10.3c0 3.5-3 5.9-8 10Z"/><path d="M7 12h2l1.2-2 1.6 4L13 12h4"/></svg></div>
+            <div><div class="type-name">血压</div><div class="type-sub">趋势自动整理</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#F5EDE4">🌿</div>
-            <div><div class="type-name">大小便</div><div class="type-sub">形态与颜色</div></div>
+            <div class="type-dot type-stool"><svg viewBox="0 0 24 24"><path d="M12 4c-2 0-2.8 2.3-1.5 3.2-2 .2-3 1.4-3 3 0 .7.2 1.3.6 1.8-2.1.2-3.3 1.6-3.3 3.3 0 .9.4 1.7 1 2.3-1.1.3-1.9 1.3-1.9 2.4 0 1.4 1.2 2.4 2.6 2.4h11c1.4 0 2.6-1 2.6-2.4 0-1.1-.8-2.1-1.9-2.4.6-.6 1-1.4 1-2.3 0-1.7-1.2-3.1-3.3-3.3.4-.5.6-1.1.6-1.8 0-1.6-1-2.8-3-3C14.8 6.3 14 4 12 4Z"/><circle cx="9.5" cy="16" r=".5" fill="currentColor"/><circle cx="14.5" cy="16" r=".5" fill="currentColor"/><path d="M10.5 18.2c.8 1 2.2 1 3 0"/></svg></div>
+            <div><div class="type-name">大小便</div><div class="type-sub">类型、颜色、气味</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#FBE9D8">⚠️</div>
-            <div><div class="type-name">异常事件</div><div class="type-sub">紧急情况存档</div></div>
+            <div class="type-dot type-event"><svg viewBox="0 0 24 24"><path d="M12 3.5 21 19H3Z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".5" fill="currentColor"/></svg></div>
+            <div><div class="type-name">异常事件</div><div class="type-sub">自定义类型</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#E8EEF8">😊</div>
-            <div><div class="type-name">状态记录</div><div class="type-sub">情绪与活力</div></div>
+            <div class="type-dot type-mood"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="9.2" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="14.8" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 14.5c1.6 1.6 5.4 1.6 7 0"/></svg></div>
+            <div><div class="type-name">状态记录</div><div class="type-sub">好状态、中性观察</div></div>
           </div>
           <div class="type-chip">
-            <div class="type-dot" style="background:#DCEDEE">🔬</div>
-            <div><div class="type-name">宠物检查</div><div class="type-sub">体检指标</div></div>
+            <div class="type-dot type-vet"><svg viewBox="0 0 24 24"><path d="M5 5v5.5a6.5 6.5 0 0 0 13 0V5M5 5h2M18 5h-2"/><circle cx="11.5" cy="16.8" r="2.2"/><path d="M18 10v2.5a2.5 2.5 0 0 1-5 0"/></svg></div>
+            <div><div class="type-name">检查记录</div><div class="type-sub">自定义字段</div></div>
           </div>
         </div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-size:80px; margin-bottom:20px;">🐾</div>
-        <div style="background:white; border-radius:20px; padding:24px; box-shadow:var(--shadow); max-width:280px; margin:0 auto; text-align:left;">
-          <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">今日摘要</div>
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; color:var(--text-sub)">已完成护理</span>
-              <span style="font-size:14px; font-weight:700; color:var(--primary)">4 项</span>
+      <div class="records-visual">
+        <div class="records-logo">
+          <img src="assets/logo.png" alt="爱猫日记图标">
+        </div>
+        <div class="summary-panel">
+          <div class="summary-eyebrow">按类型回顾</div>
+          <div class="summary-list">
+            <div class="summary-row">
+              <span>所有带照片的记录</span>
+              <span style="color:var(--primary)">相册</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; color:var(--text-sub)">上次喂食</span>
-              <span style="font-size:14px; font-weight:700; color:var(--orange)">3h 前</span>
+            <div class="summary-row">
+              <span>所有状态记录</span>
+              <span style="color:var(--orange)">日记</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; color:var(--text-sub)">今日体重</span>
-              <span style="font-size:14px; font-weight:700; color:var(--teal)">3.82 kg</span>
+            <div class="summary-row">
+              <span>所有异常事件</span>
+              <span style="color:var(--teal)">按日期</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:13px; color:var(--text-sub)">今日热量</span>
-              <span style="font-size:14px; font-weight:700; color:var(--primary)">180 / 191 kcal</span>
+            <div class="summary-row">
+              <span>所有追踪项目</span>
+              <span style="color:var(--primary)">时间戳</span>
             </div>
           </div>
+        </div>
+        <div class="records-cats" aria-hidden="true">
+          <div class="cat-avatar"><img src="assets/cat-ragdoll.png" alt=""></div>
+          <div class="cat-avatar"><img src="assets/cat-orange.png" alt=""></div>
+          <div class="cat-avatar"><img src="assets/cat-black.png" alt=""></div>
         </div>
       </div>
     </div>
@@ -832,13 +1097,13 @@ footer {
   <div class="privacy-inner">
     <div class="privacy-icon">🔒</div>
     <div class="privacy-text">
-      <h2>数据完全在你手中</h2>
-      <p>我们相信隐私是基本权利。喵咪日记不收集任何个人信息，不需要注册账号，不连接任何服务器。你的猫咪数据，永远只属于你。</p>
+      <h2>数据本地存储，完整备份不丢失</h2>
+      <p>所有数据 100% 留在你的 iPhone — 不联网、不上传、无需账号。一键导出完整备份，含猫咪、配置、全部记录。</p>
       <div class="privacy-items">
-        <div class="privacy-item">本地存储</div>
+        <div class="privacy-item">不联网</div>
         <div class="privacy-item">无需账号</div>
         <div class="privacy-item">不上传数据</div>
-        <div class="privacy-item">可随时导出</div>
+        <div class="privacy-item">完整备份</div>
       </div>
     </div>
   </div>
@@ -847,9 +1112,11 @@ footer {
 <!-- ── CTA ── -->
 <section class="cta-section" id="download">
   <div class="cta-inner">
-    <div style="font-size:56px; margin-bottom:16px;">🐱</div>
-    <h2>开始记录，从今天起</h2>
-    <p>免费下载，无内购，无订阅。<br>所有功能完整开放，专注于陪伴你和你的猫。</p>
+    <div class="cta-logo">
+      <img src="assets/logo.png" alt="爱猫日记 App 图标">
+    </div>
+    <h2>每一天都被认真数过</h2>
+    <p>支持多猫管理，支持多种格式的数据导出，方便您分享到社交网络或与兽医、ai工具交流。</p>
     <a href="#" class="store-badge">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -860,7 +1127,7 @@ footer {
       </div>
     </a>
     <p style="margin-top:16px; font-size:13px; color:var(--text-muted)">
-      需要 iOS 17.0 或更高版本 · iPhone 和 iPad 适用
+      需要 iOS 17.0 或更高版本 · iPhone 适用
     </p>
   </div>
 </section>
@@ -870,8 +1137,11 @@ footer {
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="name">🐱 喵咪日记</div>
-        <p>专为爱猫人士打造的本地记录工具。照顾爱猫，从记录每一天开始。</p>
+        <div class="name">
+          <span class="footer-logo"><img src="assets/logo.png" alt=""></span>
+          爱猫日记
+        </div>
+        <p>它把你和猫咪相处的每一个细节，整理成你随时能翻回去的一页页记录。</p>
       </div>
       <div class="footer-links">
         <h4>页面</h4>
@@ -885,14 +1155,14 @@ footer {
       <div class="footer-links">
         <h4>联系</h4>
         <ul>
-          <li><a href="mailto:fuyexx@gmail.com">fuyexx@gmail.com</a></li>
+          <li><a href="mailto:ziyeapp@gmail.com">ziyeapp@gmail.com</a></li>
           <li><a href="faq.html#feedback">提交反馈</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 喵咪日记. All rights reserved.</span>
-      <span>Made with 🐾 for cat lovers</span>
+      <span>© 2026 爱猫日记. All rights reserved.</span>
+      <span>所有数据 100% 留在你的 iPhone</span>
     </div>
   </div>
 </footer>
