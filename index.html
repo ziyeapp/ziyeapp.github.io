@@ -714,6 +714,8 @@
           <button class="active" type="button" data-lang="zh">中</button>
           <i class="divider" aria-hidden="true"></i>
           <button type="button" data-lang="en">EN</button>
+          <i class="divider" aria-hidden="true"></i>
+          <button type="button" data-lang="ja">日</button>
         </div>
         <p class="copyright">© 2026 ZIYE</p>
       </div>
@@ -738,7 +740,7 @@
           <div class="date-line">2026 春</div>
           <h2 data-i18n="catHeadline">关于喂食、用药、护理、体重的全部记忆</h2>
           <p data-i18n="catBody">为「容易忘记」的日常设计的本地记录工具。喂食、用药、护理、体重、血压、大小便、异常事件全部按时间线整理，可导出可追踪。所有数据保存在你自己的设备上。</p>
-          <a class="inline-link" href="https://www.ziyeapp.com/lovecatsdiary/" data-i18n="viewProduct">» 查看产品页</a>
+          <a class="inline-link" href="https://www.ziyeapp.com/lovecatsdiary/" data-product-link data-i18n="viewProduct">» 查看产品页</a>
         </article>
 
         <aside class="action">
@@ -751,7 +753,7 @@
             <p class="download-sub" data-i18n="freeDownload">免费下载</p>
             <div class="button-stack">
               <a class="button primary" href="https://apps.apple.com/app/id6767404682" data-i18n="downloadApp"> 下载 App ↗</a>
-              <a class="button" href="https://www.ziyeapp.com/lovecatsdiary/" data-i18n="productDetail">产品详情 →</a>
+              <a class="button" href="https://www.ziyeapp.com/lovecatsdiary/" data-product-link data-i18n="productDetail">产品详情 →</a>
             </div>
           </div>
         </aside>
@@ -928,18 +930,57 @@
         aboutBody: 'A stationery journal user and indie single-player game enthusiast who likes making practical tool products.',
         blogTitle: 'Blog',
         blogBody: 'Later I will write about product design, development notes, review experience, and app updates.'
+      },
+      ja: {
+        navApps: 'App',
+        navAbout: 'ZIYEについて',
+        navBlog: 'ブログ',
+        live: '● 公開中',
+        catTitle: 'ねこ健康手帳',
+        catSub: '猫のケアを時系列で記録',
+        catHeadline: '食事・投薬・ケア・体重の記録を、ひとつの時間軸に。',
+        catBody: '猫の日々のケアを記録するローカルアプリです。食事、投薬、ケア、体重、血圧、排泄、異常イベントを時系列で整理し、必要なときに見返せます。データはあなたの端末に保存されます。',
+        viewProduct: '» 製品ページを見る',
+        freeDownload: '無料ダウンロード',
+        downloadApp: ' Appをダウンロード ↗',
+        productDetail: '製品詳細 →',
+        idea1: '1分セルフログ App',
+        idea1Sub: '自分のための軽い記録',
+        idea1Headline: '1分で自分を記録：チェックインと軽い日記。',
+        idea1Body: '1分でも多くの情報を残せます。自分に合わせたログテンプレートを作り、タップだけで記録できます。',
+        idea2: '毎日の脳トレゲーム',
+        idea2Sub: '3分の軽いミニゲーム',
+        idea2Headline: '脳トレミニゲーム：やさしい問題から難しい問題へ。',
+        idea2Body: '毎日3つの難易度のパズル。対戦、ソロ、グローバルランキングに対応予定。',
+        idea3: 'ペン字記録 App',
+        idea3Sub: '練習を続ける人のために',
+        idea3Headline: 'ペン字記録 App：積み重ねが見える。',
+        idea3Body: 'まだ設計中です。',
+        designing: '設計中',
+        aboutTitle: 'ZIYEについて',
+        aboutBody: '手帳好き、インディーの一人用ゲーム好き。便利なツール系プロダクトを作るのが好きです。',
+        blogTitle: 'ブログ',
+        blogBody: '今後、プロダクト設計、開発メモ、審査経験、Appの更新情報を記録します。'
       }
     };
 
     document.querySelectorAll('[data-lang]').forEach((button) => {
       button.addEventListener('click', () => {
         const lang = button.dataset.lang;
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : 'en');
         document.querySelectorAll('[data-lang]').forEach((item) => {
           item.classList.toggle('active', item === button);
         });
         document.querySelectorAll('[data-i18n]').forEach((node) => {
           node.textContent = copy[lang][node.dataset.i18n];
+        });
+        const productUrls = {
+          zh: 'https://www.ziyeapp.com/lovecatsdiary/',
+          en: 'https://www.ziyeapp.com/lovecatsdiary/en/',
+          ja: 'https://www.ziyeapp.com/lovecatsdiary/ja/'
+        };
+        document.querySelectorAll('[data-product-link]').forEach((node) => {
+          node.href = productUrls[lang];
         });
       });
     });
