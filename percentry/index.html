@@ -410,7 +410,11 @@
       localStorage.setItem('ziye-language', selected);
     }
     document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
-    setLanguage(new URLSearchParams(location.search).get('lang') || localStorage.getItem('ziye-language') || 'zh');
+    function detectBrowserLang() {
+      const nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+      return nav.startsWith('zh') ? 'zh' : (nav.startsWith('ja') ? 'ja' : 'en');
+    }
+    setLanguage(new URLSearchParams(location.search).get('lang') || localStorage.getItem('ziye-language') || detectBrowserLang());
   </script>
 </body>
 </html>
