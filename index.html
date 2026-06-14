@@ -22,6 +22,7 @@
       --mint-deep: #284334;
       --green: #3f6e58;
       --green-soft: #cfe5d6;
+      --percentry: #cbd0ff;
       --shadow: 0 22px 60px rgba(17, 17, 15, 0.18);
     }
 
@@ -202,6 +203,14 @@
       pointer-events: none;
     }
 
+    .poster.percentry {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      color: #101621;
+      background: var(--percentry);
+    }
+
     .poster-logo-bg {
       position: absolute;
       z-index: 1;
@@ -212,6 +221,16 @@
       opacity: 1;
       transform: translateY(-50%);
       pointer-events: none;
+    }
+
+    .percentry .poster-logo-bg {
+      position: static;
+      align-self: flex-end;
+      width: min(52%, 300px);
+      margin-left: auto;
+      border-radius: 22%;
+      opacity: 1;
+      transform: none;
     }
 
     .poster.next {
@@ -271,12 +290,23 @@
       border-color: rgba(255, 253, 247, 0.16);
     }
 
+    .percentry .status-pill {
+      color: #303c9e;
+      background: rgba(255, 255, 255, 0.5);
+      border-color: rgba(48, 60, 158, 0.2);
+    }
+
     .poster-title {
       position: absolute;
       z-index: 4;
       left: 46px;
       right: 46px;
       bottom: 46px;
+    }
+
+    .percentry .poster-title {
+      position: static;
+      margin-top: auto;
     }
 
     .poster-title .eyebrow {
@@ -291,6 +321,10 @@
 
     .next .poster-title .eyebrow {
       color: rgba(255, 253, 247, 0.32);
+    }
+
+    .percentry .poster-title .eyebrow {
+      color: rgba(16, 22, 33, 0.52);
     }
 
     .poster-title h1,
@@ -312,6 +346,10 @@
 
     .next .poster-title p {
       color: rgba(255, 253, 247, 0.56);
+    }
+
+    .percentry .poster-title p {
+      color: rgba(16, 22, 33, 0.66);
     }
 
     .copy {
@@ -646,6 +684,14 @@
         width: 118%;
       }
 
+      .poster.percentry {
+        gap: 24px;
+      }
+
+      .percentry .poster-logo-bg {
+        width: min(62%, 210px);
+      }
+
       .copy,
       .action,
       .info-block {
@@ -760,6 +806,42 @@
       </section>
 
       <section class="app-row">
+        <div class="poster percentry">
+          <div class="status-line">
+            <span class="status-pill" data-i18n="live">● 已上线</span>
+          </div>
+          <img class="poster-logo-bg" src="/percentry/assets/icon-tight.png" alt="">
+          <div class="poster-title">
+            <span class="eyebrow">No 02 · Percentry</span>
+            <h2>Percentry</h2>
+            <p data-i18n="percentrySub">方便查看 AI 额度余量</p>
+          </div>
+        </div>
+
+        <article class="copy">
+          <div class="date-line" data-i18n="percentryDate">2026 夏</div>
+          <h2 data-i18n="percentryHeadline">Codex 与 Claude 的额度余量和重置时间</h2>
+          <p data-i18n="percentryBody">每 5 分钟自动更新。菜单栏常驻，桌面小组件支持大、中、小三种尺寸，可在额度重置时发送通知，并在 App 内查看历史用量与 Token 热力图。</p>
+          <a class="inline-link" href="/percentry/?lang=zh" data-percentry-link data-i18n="viewProduct">» 查看产品页</a>
+        </article>
+
+        <aside class="action">
+          <div>
+            <div class="action-meta">
+              <span>Download</span>
+              <span>macOS · 2026</span>
+            </div>
+            <div class="download-title">.dmg</div>
+            <p class="download-sub" data-i18n="freeMacDownload">免费 · 版本 1.2 · 2.0 MB</p>
+            <div class="button-stack">
+              <a class="button primary" href="/percentry/downloads/Percentry.dmg" download data-i18n="downloadNow">下载 .dmg ↓</a>
+              <a class="button" href="/percentry/?lang=zh" data-percentry-link data-i18n="productDetail">产品详情 →</a>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="app-row">
         <div class="poster next">
           <div class="status-line">
             <div class="app-icon next-icon" aria-hidden="true">
@@ -771,7 +853,7 @@
             <span class="status-pill" data-i18n="designing">设计中</span>
           </div>
           <div class="poster-title">
-            <span class="eyebrow">No 02 · Self Log</span>
+            <span class="eyebrow">No 03 · Self Log</span>
             <h2 data-i18n="idea1">一分钟记录自己的 App</h2>
             <p data-i18n="idea1Sub">关于自我的轻量日志</p>
           </div>
@@ -805,7 +887,7 @@
             <span class="status-pill" data-i18n="designing">设计中</span>
           </div>
           <div class="poster-title">
-            <span class="eyebrow">No 03 · Brain Game</span>
+            <span class="eyebrow">No 04 · Brain Game</span>
             <h2 data-i18n="idea2">每天脑锻炼小游戏</h2>
             <p data-i18n="idea2Sub">三分钟的轻量小游戏</p>
           </div>
@@ -836,7 +918,7 @@
             <span class="status-pill" data-i18n="designing">设计中</span>
           </div>
           <div class="poster-title">
-            <span class="eyebrow">No 04 · Handwriting</span>
+            <span class="eyebrow">No 05 · Handwriting</span>
             <h2 data-i18n="idea3">练字记录 App</h2>
             <p data-i18n="idea3Sub">给坚持练字的人的陪伴</p>
           </div>
@@ -883,6 +965,12 @@
         freeDownload: '免费下载',
         downloadApp: ' 下载 App ↗',
         productDetail: '产品详情 →',
+        percentrySub: '方便查看 AI 额度余量',
+        percentryDate: '2026 夏',
+        percentryHeadline: 'Codex 与 Claude 的额度余量和重置时间',
+        percentryBody: '每 5 分钟自动更新。菜单栏常驻，桌面小组件支持大、中、小三种尺寸，可在额度重置时发送通知，并在 App 内查看历史用量与 Token 热力图。',
+        freeMacDownload: '免费 · 版本 1.2 · 2.0 MB',
+        downloadNow: '下载 .dmg ↓',
         idea1: '一分钟记录自己的 App',
         idea1Sub: '关于自我的轻量日志',
         idea1Headline: '一分钟，做自我记录：点击打卡，写轻量日志',
@@ -915,6 +1003,12 @@
         freeDownload: 'Free download',
         downloadApp: ' Download App ↗',
         productDetail: 'Product details →',
+        percentrySub: 'AI quota at a glance',
+        percentryDate: 'Summer 2026',
+        percentryHeadline: 'Codex and Claude quota remaining and reset times.',
+        percentryBody: 'Refreshes every five minutes. Keep it in the menu bar, add small, medium, or large desktop widgets, get reset notifications, and review usage history and a token heatmap in the app.',
+        freeMacDownload: 'Free · Version 1.2 · 2.0 MB',
+        downloadNow: 'Download .dmg ↓',
         idea1: 'One-minute self log',
         idea1Sub: 'A lightweight journal about yourself',
         idea1Headline: 'One minute for self records: check in and write a light journal.',
@@ -947,6 +1041,12 @@
         freeDownload: '無料ダウンロード',
         downloadApp: ' Appをダウンロード ↗',
         productDetail: '製品詳細 →',
+        percentrySub: 'AI 利用枠をひと目で確認',
+        percentryDate: '2026 夏',
+        percentryHeadline: 'Codex と Claude の残り利用枠とリセット時刻。',
+        percentryBody: '5 分ごとに自動更新。メニューバーと小・中・大のデスクトップウィジェットに対応し、リセット通知、利用履歴、Token ヒートマップも確認できます。',
+        freeMacDownload: '無料 · バージョン 1.2 · 2.0 MB',
+        downloadNow: '.dmg をダウンロード ↓',
         idea1: '1分セルフログ App',
         idea1Sub: '自分のための軽い記録',
         idea1Headline: '1分で自分を記録：チェックインと軽い日記。',
@@ -984,6 +1084,9 @@
         };
         document.querySelectorAll('[data-product-link]').forEach((node) => {
           node.href = productUrls[lang];
+        });
+        document.querySelectorAll('[data-percentry-link]').forEach((node) => {
+          node.href = '/percentry/?lang=' + lang;
         });
       });
     });

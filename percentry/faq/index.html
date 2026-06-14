@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Percentry 常见问题</title>
+  <meta name="description" content="Percentry 安装、Codex、Claude、菜单栏、小组件和通知常见问题。">
+  <link rel="icon" href="../assets/icon.png">
+  <style>
+    :root { --ink:#11110f; --paper:#f5efe1; --cream:#fffdf7; --line:#191a17; --muted:#746f66; --yellow:#f2d85b; --purple:#5d68db; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:linear-gradient(90deg,rgba(17,17,15,.035) 0 1px,transparent 1px),var(--paper); background-size:24px 24px; font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; line-height:1.75; }
+    a { color:inherit; }
+    button { font:inherit; }
+    header { position:sticky; top:0; z-index:10; min-height:72px; padding:14px 30px; display:flex; align-items:center; justify-content:space-between; gap:24px; color:#fffdf7; background:rgba(17,17,15,.96); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:900; }
+    .brand img { width:42px; height:42px; border-radius:11px; }
+    .header-right { display:flex; align-items:center; gap:28px; }
+    nav { display:flex; gap:20px; }
+    nav a { color:rgba(255,253,247,.76); font-size:14px; font-weight:750; }
+    .lang { display:flex; gap:8px; }
+    .lang button { width:30px; height:30px; border:1px solid rgba(255,255,255,.2); border-radius:50%; color:rgba(255,255,255,.58); background:transparent; cursor:pointer; }
+    .lang button.active { color:var(--yellow); border-color:rgba(242,216,91,.5); }
+    .hero { padding:76px 32px; color:#f6f7ff; background:#101621; border-bottom:1px solid var(--line); }
+    .hero-inner, .faq-list { width:min(980px,100%); margin:0 auto; }
+    .eyebrow { color:#cbd0ff; font-size:13px; font-weight:900; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { margin:16px 0 0; font-size:clamp(48px,8vw,92px); line-height:.95; letter-spacing:-.06em; }
+    .hero p { max-width:720px; margin:24px 0 0; color:rgba(246,247,255,.68); font-size:17px; }
+    .faq-list { padding:62px 32px 88px; display:grid; gap:18px; }
+    details { background:var(--cream); border:1px solid var(--line); }
+    details[open] { box-shadow:9px 9px 0 #cbd0ff; }
+    summary { padding:24px 28px; display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; cursor:pointer; font-size:19px; font-weight:850; list-style:none; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; color:var(--purple); font:900 26px ui-monospace,SFMono-Regular,Menlo,monospace; }
+    details[open] summary::after { content:'−'; }
+    .answer { padding:0 28px 28px; color:#393833; }
+    .answer p { margin:0; }
+    .answer code { padding:2px 7px; background:#ebe7dc; border:1px solid rgba(17,17,15,.12); }
+    .contact { margin-top:28px; padding:32px; background:var(--yellow); border:1px solid var(--line); }
+    .contact h2 { margin:0 0 8px; font-size:28px; }
+    .contact p { margin:0; }
+    footer { padding:26px 32px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; color:rgba(255,253,247,.58); background:var(--ink); font-size:13px; }
+    footer div { display:flex; gap:20px; flex-wrap:wrap; }
+    @media(max-width:720px) { header { align-items:flex-start; } .header-right { align-items:flex-end; flex-direction:column-reverse; gap:10px; } nav { gap:12px; flex-wrap:wrap; justify-content:flex-end; } .hero { padding:58px 24px; } .faq-list { padding:42px 24px 66px; } summary { padding:20px; font-size:17px; } .answer { padding:0 20px 22px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="../" data-product-link><img src="../assets/icon.png" alt="Percentry"><span>Percentry</span></a>
+    <div class="header-right">
+      <nav><a href="../" data-product-link data-i18n="product">产品页</a><a href="../privacy/" data-privacy-link data-i18n="privacy">隐私政策</a></nav>
+      <div class="lang"><button class="active" data-lang="zh">中</button><button data-lang="en">EN</button><button data-lang="ja">日</button></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero"><div class="hero-inner"><span class="eyebrow">Percentry · Support</span><h1 data-i18n="title">常见问题</h1><p data-i18n="intro">关于安装、额度来源、菜单栏、小组件与隐私。</p></div></div>
+    <div class="faq-list">
+      <details open><summary data-i18n="q1">Claude 显示 Not available？</summary><div class="answer"><p data-i18n="a1">Percentry 读取 Claude Code 写入 macOS 钥匙串的订阅凭证。请在终端运行 claude，输入 /login，并选择带订阅的账号。登录后重启 Percentry，首次授权时选择“始终允许”。只在 VS Code 扩展中登录可能无法写入所需凭证。</p></div></details>
+      <details><summary data-i18n="q2">菜单栏数字为什么一直是某个低值？</summary><div class="answer"><p data-i18n="a2">该数字取所有 5 小时窗口中剩余最低的百分比，用来代表当前最紧张的额度。点开菜单栏面板可分别查看 Codex 与 Claude。</p></div></details>
+      <details><summary data-i18n="q3">小组件没有数据怎么办？</summary><div class="answer"><p data-i18n="a3">确认 Percentry 已从“应用程序”文件夹启动过一次，并等待首次刷新。若开发机曾用 Xcode 运行旧版本，可能存在小组件注册冲突；普通 DMG 安装用户通常不会遇到。</p></div></details>
+      <details><summary data-i18n="q4">数据多久更新一次？</summary><div class="answer"><p data-i18n="a4">菜单栏与桌面小组件每 5 分钟自动刷新。你也可以在 Dashboard 中点击 Refresh 手动刷新。</p></div></details>
+      <details><summary data-i18n="q5">Percentry 从哪里获得额度数据？</summary><div class="answer"><p data-i18n="a5">Codex 数据来自本机 codex app-server。Claude 数据使用 Claude Code 已存在于钥匙串中的凭证，从你的 Mac 直接查询 Anthropic 官方额度端点。两者都不经过 ZIYE 后台服务器。</p></div></details>
+      <details><summary data-i18n="q6">Percentry 会读取提示词或回复吗？</summary><div class="answer"><p data-i18n="a6">不会。Percentry 只处理额度百分比、重置时间以及用于本地历史图表的数值字段，不保存提示词、回复内容或令牌正文。</p></div></details>
+      <details><summary data-i18n="q7">只安装 Codex 或 Claude 其中一个可以吗？</summary><div class="answer"><p data-i18n="a7">可以。已配置的服务会正常显示，另一个显示 Not available。</p></div></details>
+      <details><summary data-i18n="q8">重置通知如何工作？</summary><div class="answer"><p data-i18n="a8">你可以添加多个通知时段、单独开关或选择全天。额度在启用时段内重置时，Percentry 会发送本地桌面通知；菜单栏 App 需要保持运行。</p></div></details>
+      <details><summary data-i18n="q9">支持哪些 Mac？</summary><div class="answer"><p data-i18n="a9">需要 macOS 14.0 Sonoma 或更高版本。Percentry 是 Universal App，同时支持 Apple Silicon 与 Intel Mac。</p></div></details>
+      <details><summary data-i18n="q10">为什么首次读取 Claude 时会弹出钥匙串授权？</summary><div class="answer"><p data-i18n="a10">Percentry 需要读取 Claude Code 已保存的登录凭证来查询你自己的额度。macOS 会在首次访问时要求授权。选择“始终允许”后，后续刷新可静默进行。</p></div></details>
+      <details><summary data-i18n="q11">App 如何安装？会通过 App Store 发布吗？</summary><div class="answer"><p data-i18n="a11">Percentry 通过官网提供经过 Developer ID 签名和 Apple 公证的 DMG，不计划上架 App Store。打开 DMG 后，将 Percentry 拖入“应用程序”即可。</p></div></details>
+      <div class="contact"><h2 data-i18n="contactTitle">仍然需要帮助？</h2><p><span data-i18n="contactBody">请发送问题和截图至</span> <a href="mailto:ziyeapp@gmail.com">ziyeapp@gmail.com</a></p></div>
+    </div>
+  </main>
+
+  <footer><span>© 2026 ZIYE APP · Percentry</span><div><a href="/">ZIYE App Studio</a><a href="../" data-product-link data-i18n="product">产品页</a><a href="../privacy/" data-privacy-link data-i18n="privacy">隐私政策</a></div></footer>
+
+  <script>
+    const text={
+      zh:{product:'产品页',privacy:'隐私政策',title:'常见问题',intro:'关于安装、额度来源、菜单栏、小组件与隐私。',q1:'Claude 显示 Not available？',a1:'Percentry 读取 Claude Code 写入 macOS 钥匙串的订阅凭证。请在终端运行 claude，输入 /login，并选择带订阅的账号。登录后重启 Percentry，首次授权时选择“始终允许”。只在 VS Code 扩展中登录可能无法写入所需凭证。',q2:'菜单栏数字为什么一直是某个低值？',a2:'该数字取所有 5 小时窗口中剩余最低的百分比，用来代表当前最紧张的额度。点开菜单栏面板可分别查看 Codex 与 Claude。',q3:'小组件没有数据怎么办？',a3:'确认 Percentry 已从“应用程序”文件夹启动过一次，并等待首次刷新。若开发机曾用 Xcode 运行旧版本，可能存在小组件注册冲突；普通 DMG 安装用户通常不会遇到。',q4:'数据多久更新一次？',a4:'菜单栏与桌面小组件每 5 分钟自动刷新。你也可以在 Dashboard 中点击 Refresh 手动刷新。',q5:'Percentry 从哪里获得额度数据？',a5:'Codex 数据来自本机 codex app-server。Claude 数据使用 Claude Code 已存在于钥匙串中的凭证，从你的 Mac 直接查询 Anthropic 官方额度端点。两者都不经过 ZIYE 后台服务器。',q6:'Percentry 会读取提示词或回复吗？',a6:'不会。Percentry 只处理额度百分比、重置时间以及用于本地历史图表的数值字段，不保存提示词、回复内容或令牌正文。',q7:'只安装 Codex 或 Claude 其中一个可以吗？',a7:'可以。已配置的服务会正常显示，另一个显示 Not available。',q8:'重置通知如何工作？',a8:'你可以添加多个通知时段、单独开关或选择全天。额度在启用时段内重置时，Percentry 会发送本地桌面通知；菜单栏 App 需要保持运行。',q9:'支持哪些 Mac？',a9:'需要 macOS 14.0 Sonoma 或更高版本。Percentry 是 Universal App，同时支持 Apple Silicon 与 Intel Mac。',q10:'为什么首次读取 Claude 时会弹出钥匙串授权？',a10:'Percentry 需要读取 Claude Code 已保存的登录凭证来查询你自己的额度。macOS 会在首次访问时要求授权。选择“始终允许”后，后续刷新可静默进行。',q11:'App 如何安装？会通过 App Store 发布吗？',a11:'Percentry 通过官网提供经过 Developer ID 签名和 Apple 公证的 DMG，不计划上架 App Store。打开 DMG 后，将 Percentry 拖入“应用程序”即可。',contactTitle:'仍然需要帮助？',contactBody:'请发送问题和截图至'},
+      en:{product:'Product',privacy:'Privacy',title:'Frequently Asked Questions',intro:'Installation, quota sources, menu bar, widgets, and privacy.',q1:'Claude shows Not available?',a1:'Percentry reads the subscription credential written to macOS Keychain by Claude Code. In Terminal, run claude, enter /login, and choose the account with your subscription. Restart Percentry and choose Always Allow on the first Keychain prompt. Signing in only through the VS Code extension may not create the required credential.',q2:'Why does the menu bar number stay at a low value?',a2:'It shows the lowest remaining percentage among all five-hour windows, representing your tightest quota. Open the menu bar panel to see Codex and Claude separately.',q3:'What if the widget has no data?',a3:'Make sure Percentry has been launched once from Applications and wait for the first refresh. Development Macs that previously ran an Xcode build may have a widget registration conflict; normal DMG users should not encounter it.',q4:'How often does data refresh?',a4:'The menu bar and desktop widgets refresh every five minutes. You can also click Refresh in the Dashboard.',q5:'Where does Percentry get quota data?',a5:'Codex data comes from the local codex app-server. Claude uses the credential already stored by Claude Code to query Anthropic’s official usage endpoint directly from your Mac. Neither passes through a ZIYE backend server.',q6:'Does Percentry read prompts or responses?',a6:'No. Percentry processes quota percentages, reset times, and numeric fields used for local history charts. It does not store prompts, response content, or token contents.',q7:'Can I use only Codex or only Claude?',a7:'Yes. The configured provider works normally and the other displays Not available.',q8:'How do reset notifications work?',a8:'Add multiple notification windows, toggle each one, or choose all day. Percentry sends a local desktop notification when quota resets during an enabled window. The menu bar app must be running.',q9:'Which Macs are supported?',a9:'Percentry requires macOS 14.0 Sonoma or later and is a Universal app for Apple Silicon and Intel Macs.',q10:'Why does Keychain ask for permission the first time?',a10:'Percentry needs the credential already stored by Claude Code to query your own quota. macOS asks on first access. Choose Always Allow to permit silent refreshes afterward.',q11:'How is the app installed? Will it be on the App Store?',a11:'Percentry is distributed from this website as a Developer ID signed and Apple-notarized DMG. There are no plans for an App Store release. Open the DMG and drag Percentry into Applications.',contactTitle:'Still need help?',contactBody:'Send your question and screenshots to'},
+      ja:{product:'製品ページ',privacy:'プライバシー',title:'よくある質問',intro:'インストール、データ取得元、メニューバー、ウィジェット、プライバシーについて。',q1:'Claude が Not available と表示される',a1:'Claude Code が macOS キーチェーンに保存したサブスクリプション認証情報を読み取ります。ターミナルで claude を実行し、/login を入力して契約中のアカウントを選択してください。その後 Percentry を再起動し、初回のキーチェーン確認で「常に許可」を選択します。VS Code 拡張だけのログインでは必要な認証情報が作成されない場合があります。',q2:'メニューバーの数字が低い値のままなのはなぜ？',a2:'すべての5時間枠の中で最も低い残量を表示しています。メニューバーパネルを開くと Codex と Claude を個別に確認できます。',q3:'ウィジェットにデータがない場合は？',a3:'「アプリケーション」から Percentry を一度起動し、最初の更新を待ってください。以前 Xcode 版を実行した開発用 Mac では登録の競合が起きる場合がありますが、通常の DMG ユーザーでは発生しません。',q4:'更新頻度は？',a4:'メニューバーとデスクトップウィジェットは5分ごとに更新します。Dashboard の Refresh から手動更新もできます。',q5:'利用枠データはどこから取得しますか？',a5:'Codex はローカルの codex app-server から取得します。Claude は Claude Code が保存した認証情報を使い、Mac から Anthropic 公式の利用量エンドポイントへ直接問い合わせます。ZIYE のバックエンドは経由しません。',q6:'プロンプトや回答を読み取りますか？',a6:'読み取りません。利用枠のパーセント、リセット時刻、ローカル履歴グラフ用の数値フィールドのみを処理し、プロンプト、回答本文、トークン内容は保存しません。',q7:'Codex または Claude だけでも使えますか？',a7:'はい。設定済みのサービスは通常どおり表示され、もう一方は Not available になります。',q8:'リセット通知の仕組みは？',a8:'複数の通知時間帯、個別オン・オフ、終日を設定できます。有効な時間帯に利用枠がリセットされるとローカル通知を送ります。メニューバー App が実行中である必要があります。',q9:'対応 Mac は？',a9:'macOS 14.0 Sonoma 以降が必要です。Apple Silicon と Intel Mac に対応する Universal App です。',q10:'初回にキーチェーンの確認が表示されるのはなぜ？',a10:'自分の Claude 利用枠を取得するため、Claude Code が保存した認証情報を読み取ります。初回に macOS が許可を求めます。「常に許可」を選ぶと、その後は静かに更新できます。',q11:'インストール方法は？ App Store でも配布しますか？',a11:'Developer ID 署名と Apple 公証済みの DMG を公式サイトから配布します。App Store での配布予定はありません。DMG を開き、Percentry を「アプリケーション」へドラッグしてください。',contactTitle:'解決しない場合',contactBody:'質問とスクリーンショットをお送りください：'}
+    };
+    function setLanguage(lang){const selected=text[lang]?lang:'zh';document.documentElement.lang=selected==='zh'?'zh-CN':selected;document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===selected));document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=text[selected][n.dataset.i18n]);document.querySelectorAll('[data-product-link]').forEach(a=>a.href='../?lang='+selected);document.querySelectorAll('[data-privacy-link]').forEach(a=>a.href='../privacy/?lang='+selected);history.replaceState(null,'',location.pathname+'?lang='+selected);localStorage.setItem('ziye-language',selected)}
+    document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLanguage(b.dataset.lang)));
+    setLanguage(new URLSearchParams(location.search).get('lang')||localStorage.getItem('ziye-language')||'zh');
+  </script>
+</body>
+</html>

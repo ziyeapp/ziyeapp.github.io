@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Percentry · Codex 与 Claude 额度一眼看清</title>
+  <meta name="description" content="在 Mac 菜单栏和桌面小组件上查看 Codex 与 Claude 的额度剩余百分比、重置时间和使用历史。">
+  <meta property="og:title" content="Percentry · AI quota at a glance">
+  <meta property="og:description" content="Codex and Claude quota remaining, reset times, widgets, notifications, and local usage history for macOS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.ziyeapp.com/percentry/assets/widgets.png">
+  <link rel="icon" href="assets/icon.png">
+  <style>
+    :root {
+      --black: #0a0b0a;
+      --ink: #151512;
+      --cream: #f2eadc;
+      --cream-light: #faf7ef;
+      --line: rgba(21, 21, 18, 0.2);
+      --muted: #6f6b63;
+      --purple: #5d68db;
+      --purple-soft: #cbd0ff;
+      --orange: #d76736;
+      --green: #28bf58;
+      --yellow: #f2d85b;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--black);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .page {
+      width: min(1380px, calc(100% - 34px));
+      margin: 22px auto;
+      padding: 12px;
+      overflow: hidden;
+      background: #111211;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 30px;
+      box-shadow: 0 26px 80px rgba(0,0,0,.42);
+    }
+
+    .topbar {
+      height: 58px;
+      padding: 0 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: #f8f5ec;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 15px; font-weight: 850; }
+    .brand img { width: 30px; height: 30px; border-radius: 8px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-pill, .lang-pill, .download-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 999px;
+    }
+    .nav-pill { padding: 3px 7px; gap: 2px; }
+    .nav-pill a { padding: 6px 12px; color: rgba(255,255,255,.72); text-decoration: none; font-size: 12px; font-weight: 700; }
+    .nav-pill a:hover { color: #fff; }
+    .lang-pill { padding: 3px; }
+    .lang-pill button { width: 34px; height: 26px; padding: 0; border: 0; border-radius: 999px; color: rgba(255,255,255,.5); background: transparent; cursor: pointer; font-size: 11px; font-weight: 800; }
+    .lang-pill button.active { color: var(--black); background: var(--cream); }
+    .download-pill { padding: 6px 13px; color: rgba(255,255,255,.78); text-decoration: none; font-size: 11px; font-weight: 800; }
+    .download-pill:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+
+    .surface {
+      position: relative;
+      overflow: hidden;
+      background: var(--cream) url("assets/cream-surface.jpg") center top / cover;
+      border-radius: 22px 22px 22px 10px;
+    }
+    .surface::before {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: -1px;
+      left: -1px;
+      width: 116px;
+      height: 34px;
+      background: #111211;
+      border-radius: 0 0 18px 0;
+      pointer-events: none;
+    }
+    .surface::after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      right: -1px;
+      bottom: -1px;
+      width: 142px;
+      height: 34px;
+      background: #111211;
+      border-radius: 18px 0 0 0;
+      pointer-events: none;
+    }
+
+    .hero {
+      min-height: 590px;
+      padding: 72px 54px 46px;
+      display: grid;
+      grid-template-columns: minmax(0,.86fr) minmax(520px,1.14fr);
+      gap: 34px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow img { width: 30px; height: 30px; border-radius: 8px; }
+    h1 { margin: 22px 0 0; max-width: 660px; font-size: clamp(62px,7.2vw,112px); line-height: .82; letter-spacing: -.075em; }
+    .hero h2 { margin: 28px 0 0; max-width: 660px; font-size: clamp(27px,3vw,44px); line-height: 1.08; letter-spacing: -.04em; }
+    .hero-copy > p { margin: 20px 0 0; max-width: 590px; color: #4d4a44; font-size: 15px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 27px; }
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 17px;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      color: var(--ink);
+      background: transparent;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .button.primary { color: var(--cream-light); background: var(--ink); }
+    .button.disabled { opacity: .5; cursor: default; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 18px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .hero-art { position: relative; min-height: 465px; display: grid; place-items: center; }
+    .hero-art::before {
+      content: "";
+      position: absolute;
+      inset: 8% 2% 4% 9%;
+      border: 1px solid rgba(21,21,18,.14);
+      border-radius: 46% 54% 48% 52%;
+      background: rgba(255,255,255,.25);
+      transform: rotate(-4deg);
+    }
+    .hero-art img { position: relative; z-index: 2; width: min(100%,720px); border-radius: 24px; }
+
+    .section-head { padding: 42px 42px 22px; display: flex; justify-content: space-between; gap: 30px; align-items: end; }
+    .section-head h2 { margin: 8px 0 0; max-width: 720px; font-size: clamp(34px,5vw,68px); line-height: .95; letter-spacing: -.055em; }
+    .section-head p { max-width: 430px; margin: 0; color: var(--muted); font-size: 14px; }
+    .section-kicker { color: var(--purple); font: 800 11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing: .14em; }
+
+    .feature-grid { padding: 0 42px 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .feature-card {
+      min-height: 330px;
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      overflow: hidden;
+      background: rgba(255,255,255,.43);
+      border: 1px solid rgba(21,21,18,.22);
+      border-radius: 22px;
+    }
+    .feature-copy { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+    .feature-copy h3 { margin: 10px 0 0; font-size: 27px; line-height: 1.04; letter-spacing: -.04em; }
+    .feature-copy p { margin: 15px 0 0; color: #555149; font-size: 13px; line-height: 1.7; }
+    .feature-num { color: var(--muted); font: 800 10px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing: .15em; }
+    .feature-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px; }
+    .feature-tags span { padding: 5px 9px; border: 1px solid rgba(21,21,18,.2); border-radius: 999px; color: var(--muted); font-size: 9px; font-weight: 800; }
+    .feature-image { min-width: 0; min-height: 280px; display: grid; place-items: center; overflow: hidden; background: #d6e58c; }
+    .feature-image.dark { background: #151b27; }
+    .feature-image img { width: 90%; max-height: 310px; object-fit: contain; filter: drop-shadow(0 14px 20px rgba(0,0,0,.15)); }
+    .feature-image .tall { width: 96%; max-height: 340px; object-position: top; }
+
+    .app-showcase { margin: 0 42px 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .app-card { overflow: hidden; border: 1px solid rgba(21,21,18,.22); border-radius: 22px; background: rgba(255,255,255,.38); }
+    .detail-image { padding: 22px 22px 0; background: #e8e5df; border-bottom: 1px solid var(--line); }
+    .detail-image img { display: block; width: 100%; height: auto; border: 1px solid rgba(21,21,18,.13); border-bottom: 0; border-radius: 15px 15px 0 0; }
+    .detail-copy { padding: 35px; display: flex; flex-direction: column; justify-content: center; }
+    .detail-copy h3 { margin: 12px 0 0; font-size: 34px; line-height: 1.03; letter-spacing: -.045em; }
+    .detail-copy p { margin: 18px 0 0; color: #514e47; font-size: 14px; line-height: 1.75; }
+    .detail-list { margin: 23px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .detail-list li { padding: 10px 0; display: flex; gap: 10px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 700; }
+    .detail-list strong { color: var(--purple); font: 800 10px ui-monospace,SFMono-Regular,Menlo,monospace; }
+
+    .privacy {
+      margin: 0 42px 12px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 38px;
+      color: #f7f5ed;
+      background: #111211;
+      border-radius: 22px;
+    }
+    .privacy h2 { margin: 12px 0 0; max-width: 650px; font-size: clamp(34px,4.5vw,60px); line-height: .98; letter-spacing: -.05em; }
+    .privacy p { margin: 18px 0 0; max-width: 670px; color: rgba(247,245,237,.65); font-size: 13px; line-height: 1.75; }
+    .privacy-stats { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.16); border-radius: 16px; overflow: hidden; }
+    .privacy-stat { min-height: 112px; padding: 20px; border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
+    .privacy-stat:nth-child(2n) { border-right: 0; }
+    .privacy-stat:nth-last-child(-n+2) { border-bottom: 0; }
+    .privacy-stat b { display: block; color: var(--purple-soft); font-size: 23px; }
+    .privacy-stat span { display: block; margin-top: 5px; color: rgba(247,245,237,.55); font-size: 10px; font-weight: 700; }
+
+    .install { padding: 30px 42px 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .install article { padding: 28px; background: rgba(255,255,255,.38); border: 1px solid rgba(21,21,18,.22); border-radius: 20px; }
+    .install h3 { margin: 0 0 14px; font-size: 23px; }
+    .install ul, .install ol { margin: 0; padding-left: 20px; color: #504d46; font-size: 12px; }
+    .install li { margin: 8px 0; }
+
+    .cta { margin: 0 42px 42px; padding: 34px; display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; background: var(--yellow); border: 1px solid rgba(21,21,18,.28); border-radius: 22px; }
+    .cta h2 { margin: 0; font-size: clamp(36px,5vw,64px); line-height: .9; letter-spacing: -.055em; }
+    .cta p { margin: 10px 0 0; color: rgba(21,21,18,.62); font-size: 12px; font-weight: 700; }
+    .cta .button { min-width: 210px; color: var(--yellow); background: var(--ink); }
+
+    footer { padding: 8px 12px 0; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: rgba(255,255,255,.48); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+    footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    footer a { color: rgba(255,255,255,.7); }
+
+    @media (max-width: 1040px) {
+      .hero { grid-template-columns: 1fr; padding-top: 64px; }
+      .hero-art { min-height: 400px; }
+      .feature-card { grid-template-columns: 1fr; }
+      .feature-image { min-height: 250px; }
+    }
+
+    @media (max-width: 760px) {
+      .page { width: calc(100% - 16px); margin: 8px auto; padding: 8px; border-radius: 22px; }
+      .topbar { height: auto; min-height: 56px; padding: 4px 2px 10px; align-items: flex-start; }
+      .nav-pill { display: none; }
+      .top-actions { flex-wrap: wrap; justify-content: flex-end; }
+      .download-pill { display: none; }
+      .surface { border-radius: 16px 16px 16px 7px; }
+      .surface::before { width: 70px; height: 24px; border-radius: 0 0 12px 0; }
+      .surface::after { width: 76px; height: 24px; border-radius: 12px 0 0 0; }
+      .hero { min-height: 0; padding: 54px 20px 22px; gap: 8px; }
+      h1 { margin-top: 18px; font-size: 57px; }
+      .hero h2 { font-size: 27px; }
+      .hero-copy > p { font-size: 13px; }
+      .hero-art { min-height: 270px; }
+      .section-head { padding: 32px 20px 18px; display: block; }
+      .section-head h2 { font-size: 40px; }
+      .section-head p { margin-top: 16px; font-size: 12px; }
+      .feature-grid { padding: 0 20px 26px; grid-template-columns: 1fr; }
+      .feature-card { min-height: 0; }
+      .feature-copy { padding: 22px; }
+      .feature-copy h3 { font-size: 25px; }
+      .app-showcase { margin: 0 20px 26px; grid-template-columns: 1fr; }
+      .detail-image { padding: 12px 12px 0; }
+      .detail-copy { padding: 24px; }
+      .privacy { margin: 0 20px 10px; padding: 26px 22px; grid-template-columns: 1fr; gap: 24px; }
+      .privacy h2 { font-size: 38px; }
+      .install { padding: 22px 20px 28px; grid-template-columns: 1fr; }
+      .cta { margin: 0 20px 28px; padding: 25px 22px; grid-template-columns: 1fr; }
+      .cta .button { min-width: 0; width: 100%; }
+      footer { padding-bottom: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="/"><img src="assets/icon.png" alt="Percentry"><span>Percentry</span></a>
+      <div class="top-actions">
+        <nav class="nav-pill">
+          <a href="#features" data-i18n="navFeatures">功能</a>
+          <a href="#privacy" data-i18n="navPrivacy">隐私</a>
+          <a href="#install" data-i18n="navSetup">安装</a>
+        </nav>
+        <div class="lang-pill" aria-label="Language">
+          <button class="active" type="button" data-lang="zh">中</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ja">日</button>
+        </div>
+        <a class="download-pill" href="downloads/Percentry.dmg" download data-i18n="downloadNow">下载 .dmg</a>
+      </div>
+    </header>
+
+    <main class="surface">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><img src="assets/icon.png" alt=""><span>No 02 · Percentry · macOS</span></div>
+          <h1>Percentry</h1>
+          <h2 data-i18n="heroTitle">Codex 与 Claude 的额度余量和重置时间，一眼看清</h2>
+          <p data-i18n="heroBody">常驻菜单栏，也能放进桌面小组件。查看 5 小时滚动窗口和每周窗口还剩多少额度、什么时候重置，并在 App 内回顾使用历史。</p>
+          <div class="hero-actions">
+            <a class="button primary" href="downloads/Percentry.dmg" download data-i18n="downloadNow">下载 .dmg ↓</a>
+            <a class="button" href="#features" data-i18n="seeFeatures">查看功能</a>
+          </div>
+          <div class="hero-meta"><span data-i18n="free">免费</span><span>Version 1.2</span><span>macOS 14+</span><span>Universal</span><span data-i18n="notarized">Apple 公证</span></div>
+        </div>
+        <div class="hero-art"><img src="assets/widgets.png" alt="Percentry desktop widgets in three sizes"></div>
+      </section>
+
+      <section id="features">
+        <div class="section-head">
+          <div><span class="section-kicker">01 / AT A GLANCE</span><h2 data-i18n="featuresTitle">额度信息，放在最顺手的位置</h2></div>
+          <p data-i18n="featuresIntro">菜单栏负责随时查看，桌面小组件负责一直可见。两种方式都展示剩余百分比和重置时间。</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-copy">
+              <div><span class="feature-num">01 / MENU BAR</span><h3 data-i18n="menuTitle">最紧张的额度，始终在菜单栏</h3><p data-i18n="menuBody">数字显示所有 5 小时窗口里剩余最低的百分比，点开即可分别查看 Codex 与 Claude。</p></div>
+              <div class="feature-tags"><span>5H</span><span>WEEK</span><span>RESET</span></div>
+            </div>
+            <div class="feature-image"><img src="assets/menu-bar.png" alt="Percentry menu bar popover"></div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-copy">
+              <div><span class="feature-num">02 / WIDGETS</span><h3 data-i18n="widgetTitle">小、中、大，放进你的桌面</h3><p data-i18n="widgetBody">三种尺寸都展示 5 小时与每周额度，每 5 分钟自动更新。</p></div>
+              <div class="feature-tags"><span>SMALL</span><span>MEDIUM</span><span>LARGE</span></div>
+            </div>
+            <div class="feature-image dark"><img src="assets/widgets-composite.png" alt="Percentry widgets"></div>
+          </article>
+        </div>
+
+        <div class="app-showcase">
+          <article class="app-card">
+            <div class="detail-image"><img src="assets/dashboard.png" alt="Percentry Dashboard"></div>
+            <div class="detail-copy">
+              <span class="section-kicker">03 / DASHBOARD</span>
+              <h3 data-i18n="dashboardTitle">不只看余量，也看使用历史</h3>
+              <p data-i18n="dashboardBody">额度卡片、每日或每月使用柱状图，以及按天显示的 Token 热力图，全部汇总在一个紧凑的 Dashboard 中。</p>
+              <ul class="detail-list">
+                <li><strong>01</strong><span data-i18n="dashboardFeature1">Codex 与 Claude 额度卡片</span></li>
+                <li><strong>02</strong><span data-i18n="dashboardFeature2">日 / 月用量切换</span></li>
+                <li><strong>03</strong><span data-i18n="dashboardFeature3">Token 使用热力图</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="detail-image"><img src="assets/settings.png" alt="Percentry notification and privacy settings"></div>
+            <div class="detail-copy">
+              <span class="section-kicker">04 / NOTIFICATIONS</span>
+              <h3 data-i18n="notifyTitle">在合适的时间，提醒额度已经重置</h3>
+              <p data-i18n="notifyBody">设置多个工作时段、单独开关或全天模式。额度在启用时段内重置时，Percentry 会发送桌面通知。</p>
+              <ul class="detail-list">
+                <li><strong>01</strong><span data-i18n="notifyFeature1">支持多个通知时段</span></li>
+                <li><strong>02</strong><span data-i18n="notifyFeature2">每个时段可独立启用</span></li>
+                <li><strong>03</strong><span data-i18n="notifyFeature3">内置测试通知</span></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="privacy" id="privacy">
+        <div>
+          <span class="section-kicker">05 / PRIVACY FIRST</span>
+          <h2 data-i18n="privacyTitle">没有服务器，数据在本机</h2>
+          <p data-i18n="privacyBody">Percentry 不包含统计 SDK、云数据库或远程日志。Codex 数据由本机 codex app-server 提供；Claude 使用 Claude Code 已保存在钥匙串中的凭证，直接查询 Anthropic 官方额度端点。不会向第三方发送提示词、回复或令牌内容。</p>
+        </div>
+        <div class="privacy-stats">
+          <div class="privacy-stat"><b>0</b><span data-i18n="privacyFact1">后台服务器</span></div>
+          <div class="privacy-stat"><b>0</b><span data-i18n="privacyFact2">统计 SDK</span></div>
+          <div class="privacy-stat"><b>Local</b><span data-i18n="privacyFact3">设置与使用历史</span></div>
+          <div class="privacy-stat"><b>Direct</b><span data-i18n="privacyFact4">仅直连官方数据源</span></div>
+        </div>
+      </section>
+
+      <section class="install" id="install">
+        <article><h3 data-i18n="requirementsTitle">系统要求</h3><ul><li data-i18n="requirement1">macOS 14.0 Sonoma 或更高版本</li><li data-i18n="requirement2">支持 Apple Silicon 与 Intel Mac</li><li data-i18n="requirement3">Codex：本机安装 Codex CLI 并已登录</li><li data-i18n="requirement4">Claude：安装 Claude Code，并在终端完成订阅账号登录</li></ul></article>
+        <article><h3 data-i18n="installTitle">安装方式</h3><ol><li data-i18n="install1">打开 Percentry.dmg，将 App 拖入“应用程序”</li><li data-i18n="install2">首次读取 Claude 时，在钥匙串授权中选择“始终允许”</li><li data-i18n="install3">在桌面“编辑小组件”中搜索 Percentry</li></ol></article>
+      </section>
+
+      <section class="cta" id="download">
+        <div><h2>Percentry<br>for macOS.</h2><p data-i18n="downloadMeta">免费 · Version 1.2 · 2.0 MB · Developer ID 签名 · Apple 公证</p></div>
+        <a class="button" href="downloads/Percentry.dmg" download data-i18n="downloadNow">下载 .dmg ↓</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 ZIYE APP · Percentry</span>
+      <nav><a href="/">ZIYE App Studio</a><a href="privacy/" data-local-link data-i18n="footerPrivacy">隐私政策</a><a href="faq/" data-local-link data-i18n="footerFaq">常见问题</a><a href="mailto:ziyeapp@gmail.com" data-i18n="footerContact">联系</a></nav>
+    </footer>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        navFeatures:'功能',navPrivacy:'隐私',navSetup:'安装',heroTitle:'Codex 与 Claude 的额度余量和重置时间，一眼看清',heroBody:'常驻菜单栏，也能放进桌面小组件。查看 5 小时滚动窗口和每周窗口还剩多少额度、什么时候重置，并在 App 内回顾使用历史。',downloadNow:'下载 .dmg ↓',seeFeatures:'查看功能',free:'免费',notarized:'Apple 公证',featuresTitle:'额度信息，放在最顺手的位置',featuresIntro:'菜单栏负责随时查看，桌面小组件负责一直可见。两种方式都展示剩余百分比和重置时间。',menuTitle:'最紧张的额度，始终在菜单栏',menuBody:'数字显示所有 5 小时窗口里剩余最低的百分比，点开即可分别查看 Codex 与 Claude。',widgetTitle:'小、中、大，放进你的桌面',widgetBody:'三种尺寸都展示 5 小时与每周额度，每 5 分钟自动更新。',dashboardTitle:'不只看余量，也看使用历史',dashboardBody:'额度卡片、每日或每月使用柱状图，以及按天显示的 Token 热力图，全部汇总在一个紧凑的 Dashboard 中。',dashboardFeature1:'Codex 与 Claude 额度卡片',dashboardFeature2:'日 / 月用量切换',dashboardFeature3:'Token 使用热力图',notifyTitle:'在合适的时间，提醒额度已经重置',notifyBody:'设置多个工作时段、单独开关或全天模式。额度在启用时段内重置时，Percentry 会发送桌面通知。',notifyFeature1:'支持多个通知时段',notifyFeature2:'每个时段可独立启用',notifyFeature3:'内置测试通知',privacyTitle:'没有服务器，数据在本机',privacyBody:'Percentry 不包含统计 SDK、云数据库或远程日志。Codex 数据由本机 codex app-server 提供；Claude 使用 Claude Code 已保存在钥匙串中的凭证，直接查询 Anthropic 官方额度端点。不会向第三方发送提示词、回复或令牌内容。',privacyFact1:'后台服务器',privacyFact2:'统计 SDK',privacyFact3:'设置与使用历史',privacyFact4:'仅直连官方数据源',requirementsTitle:'系统要求',requirement1:'macOS 14.0 Sonoma 或更高版本',requirement2:'支持 Apple Silicon 与 Intel Mac',requirement3:'Codex：本机安装 Codex CLI 并已登录',requirement4:'Claude：安装 Claude Code，并在终端完成订阅账号登录',installTitle:'安装方式',install1:'打开 Percentry.dmg，将 App 拖入“应用程序”',install2:'首次读取 Claude 时，在钥匙串授权中选择“始终允许”',install3:'在桌面“编辑小组件”中搜索 Percentry',downloadMeta:'免费 · Version 1.2 · 2.0 MB · Developer ID 签名 · Apple 公证',footerPrivacy:'隐私政策',footerFaq:'常见问题',footerContact:'联系'
+      },
+      en: {
+        navFeatures:'Features',navPrivacy:'Privacy',navSetup:'Install',heroTitle:'Codex and Claude quota remaining and reset times, at a glance.',heroBody:'Keep it in the menu bar or place it on your desktop. See five-hour rolling and weekly quota, reset times, and local usage history in one small Mac app.',downloadNow:'Download .dmg ↓',seeFeatures:'Explore features',free:'Free',notarized:'Apple notarized',featuresTitle:'Quota information where it is easiest to see',featuresIntro:'The menu bar is ready whenever you need it. Desktop widgets stay visible. Both show remaining percentage and reset times.',menuTitle:'Your tightest quota, always in the menu bar',menuBody:'The number shows the lowest remaining percentage across all five-hour windows. Open it to see Codex and Claude separately.',widgetTitle:'Small, medium, and large on your desktop',widgetBody:'All three sizes show five-hour and weekly quota and refresh every five minutes.',dashboardTitle:'See usage history, not only what remains',dashboardBody:'Quota cards, daily or monthly usage bars, and a token heatmap are combined in one compact Dashboard.',dashboardFeature1:'Codex and Claude quota cards',dashboardFeature2:'Daily / monthly views',dashboardFeature3:'Token usage heatmap',notifyTitle:'Know when your quota has reset',notifyBody:'Set multiple work windows, toggle them individually, or choose all day. Percentry notifies you when quota resets during an enabled window.',notifyFeature1:'Multiple notification windows',notifyFeature2:'Individual window toggles',notifyFeature3:'Built-in test notification',privacyTitle:'No servers. Your data stays on this Mac.',privacyBody:'Percentry includes no analytics SDK, cloud database, or remote logging. Codex data comes from the local codex app-server. Claude uses the credential stored by Claude Code to query Anthropic’s official usage endpoint directly. Prompts, responses, and token contents are never sent to a third party.',privacyFact1:'Backend servers',privacyFact2:'Analytics SDKs',privacyFact3:'Settings and history',privacyFact4:'Official sources only',requirementsTitle:'Requirements',requirement1:'macOS 14.0 Sonoma or later',requirement2:'Universal for Apple Silicon and Intel Macs',requirement3:'Codex: Codex CLI installed and signed in',requirement4:'Claude: Claude Code installed and signed in through Terminal',installTitle:'Install',install1:'Open Percentry.dmg and drag the app into Applications',install2:'Choose Always Allow on the first Claude Keychain prompt',install3:'Search for Percentry in Edit Widgets on the desktop',downloadMeta:'Free · Version 1.2 · 2.0 MB · Developer ID signed · Apple notarized',footerPrivacy:'Privacy',footerFaq:'FAQ',footerContact:'Contact'
+      },
+      ja: {
+        navFeatures:'機能',navPrivacy:'プライバシー',navSetup:'インストール',heroTitle:'Codex と Claude の残り利用枠とリセット時刻を、ひと目で。',heroBody:'メニューバーにも、デスクトップにも。5時間ローリング枠と週間枠の残量、リセット時刻、ローカル利用履歴を小さな Mac App で確認できます。',downloadNow:'.dmg をダウンロード ↓',seeFeatures:'機能を見る',free:'無料',notarized:'Apple 公証済み',featuresTitle:'利用枠を、いちばん見やすい場所に',featuresIntro:'メニューバーですぐ確認し、デスクトップウィジェットで常に表示。どちらも残りパーセントとリセット時刻を確認できます。',menuTitle:'最も少ない利用枠を、いつでもメニューバーに',menuBody:'すべての5時間枠の中で最も低い残量を表示します。開くと Codex と Claude を個別に確認できます。',widgetTitle:'小・中・大、デスクトップに合わせて',widgetBody:'3つのサイズすべてで5時間枠と週間枠を表示し、5分ごとに更新します。',dashboardTitle:'残量だけでなく、利用履歴も',dashboardBody:'現在の利用枠、日別・月別の使用グラフ、Token ヒートマップをコンパクトな Dashboard にまとめます。',dashboardFeature1:'Codex と Claude の利用枠カード',dashboardFeature2:'日別 / 月別表示',dashboardFeature3:'Token 使用ヒートマップ',notifyTitle:'利用枠のリセットを適切な時間に通知',notifyBody:'複数の作業時間帯、個別オン・オフ、終日モードを設定できます。有効な時間帯にリセットされると通知します。',notifyFeature1:'複数の通知時間帯',notifyFeature2:'時間帯ごとのオン・オフ',notifyFeature3:'テスト通知機能',privacyTitle:'サーバーなし。データはこの Mac に。',privacyBody:'分析 SDK、クラウドデータベース、リモートログはありません。Codex はローカルの codex app-server から取得し、Claude は Claude Code がキーチェーンに保存した認証情報で Anthropic 公式エンドポイントへ直接問い合わせます。プロンプト、回答、トークン内容を第三者へ送信しません。',privacyFact1:'バックエンドサーバー',privacyFact2:'分析 SDK',privacyFact3:'設定と利用履歴',privacyFact4:'公式データソースのみ',requirementsTitle:'システム要件',requirement1:'macOS 14.0 Sonoma 以降',requirement2:'Apple Silicon・Intel Mac 対応',requirement3:'Codex：Codex CLI をインストールしてログイン済み',requirement4:'Claude：Claude Code をインストールし、ターミナルでログイン済み',installTitle:'インストール',install1:'Percentry.dmg を開き、App を「アプリケーション」へドラッグ',install2:'初回の Claude キーチェーン確認で「常に許可」を選択',install3:'デスクトップの「ウィジェットを編集」で Percentry を検索',downloadMeta:'無料 · Version 1.2 · 2.0 MB · Developer ID 署名 · Apple 公証済み',footerPrivacy:'プライバシー',footerFaq:'よくある質問',footerContact:'お問い合わせ'
+      }
+    };
+
+    function setLanguage(lang) {
+      const selected = translations[lang] ? lang : 'zh';
+      document.documentElement.lang = selected === 'zh' ? 'zh-CN' : selected;
+      document.querySelectorAll('[data-lang]').forEach((button) => button.classList.toggle('active', button.dataset.lang === selected));
+      document.querySelectorAll('[data-i18n]').forEach((node) => {
+        node.textContent = translations[selected][node.dataset.i18n];
+      });
+      document.querySelectorAll('[data-local-link]').forEach((link) => { link.href = link.getAttribute('href').split('?')[0] + '?lang=' + selected; });
+      history.replaceState(null, '', location.pathname + '?lang=' + selected + location.hash);
+      localStorage.setItem('ziye-language', selected);
+    }
+    document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+    setLanguage(new URLSearchParams(location.search).get('lang') || localStorage.getItem('ziye-language') || 'zh');
+  </script>
+</body>
+</html>
