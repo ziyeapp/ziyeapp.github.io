@@ -1067,29 +1067,46 @@
       }
     };
 
+    function applyLang(lang) {
+      if (!copy[lang]) lang = 'en';
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : 'en');
+      document.querySelectorAll('[data-lang]').forEach((item) => {
+        item.classList.toggle('active', item.dataset.lang === lang);
+      });
+      document.querySelectorAll('[data-i18n]').forEach((node) => {
+        const text = copy[lang][node.dataset.i18n];
+        if (text !== undefined) node.textContent = text;
+      });
+      const productUrls = {
+        zh: 'https://www.ziyeapp.com/lovecatsdiary/',
+        en: 'https://www.ziyeapp.com/lovecatsdiary/en/',
+        ja: 'https://www.ziyeapp.com/lovecatsdiary/ja/'
+      };
+      document.querySelectorAll('[data-product-link]').forEach((node) => {
+        node.href = productUrls[lang];
+      });
+      document.querySelectorAll('[data-percentry-link]').forEach((node) => {
+        node.href = '/percentry/?lang=' + lang;
+      });
+    }
+
     document.querySelectorAll('[data-lang]').forEach((button) => {
       button.addEventListener('click', () => {
         const lang = button.dataset.lang;
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : 'en');
-        document.querySelectorAll('[data-lang]').forEach((item) => {
-          item.classList.toggle('active', item === button);
-        });
-        document.querySelectorAll('[data-i18n]').forEach((node) => {
-          node.textContent = copy[lang][node.dataset.i18n];
-        });
-        const productUrls = {
-          zh: 'https://www.ziyeapp.com/lovecatsdiary/',
-          en: 'https://www.ziyeapp.com/lovecatsdiary/en/',
-          ja: 'https://www.ziyeapp.com/lovecatsdiary/ja/'
-        };
-        document.querySelectorAll('[data-product-link]').forEach((node) => {
-          node.href = productUrls[lang];
-        });
-        document.querySelectorAll('[data-percentry-link]').forEach((node) => {
-          node.href = '/percentry/?lang=' + lang;
-        });
+        localStorage.setItem('ziyeapp-lang', lang);
+        applyLang(lang);
       });
     });
+
+    // First visit: follow the browser's language; afterwards honor the saved choice.
+    (function () {
+      let lang = localStorage.getItem('ziyeapp-lang');
+      if (!lang) {
+        const nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = nav.startsWith('zh') ? 'zh' : (nav.startsWith('ja') ? 'ja' : 'en');
+      }
+      applyLang(lang);
+    })();
   </script>
 </body>
 </html>
