@@ -233,6 +233,46 @@
       transform: none;
     }
 
+    .poster.duobaotabei {
+      color: #262119;
+      background: #EDE5D3;
+    }
+
+    .poster.duobaotabei::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: repeating-linear-gradient(135deg, rgba(122, 46, 46, 0.05) 0 1px, transparent 1px 14px);
+      pointer-events: none;
+    }
+
+    .duobaotabei .status-pill {
+      color: #7A2E2E;
+      background: rgba(255, 253, 247, 0.5);
+      border-color: rgba(122, 46, 46, 0.2);
+    }
+
+    .duobaotabei .poster-title .eyebrow {
+      color: rgba(38, 33, 25, 0.42);
+    }
+
+    .duobaotabei .poster-title p {
+      color: rgba(38, 33, 25, 0.68);
+    }
+
+    .duobaotabei .poster-glyph-bg {
+      position: absolute;
+      z-index: 1;
+      right: -6%;
+      top: 46%;
+      transform: translateY(-50%);
+      width: min(72%, 460px);
+      opacity: 0.22;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .poster.next {
       color: var(--yellow);
       background:
@@ -806,13 +846,49 @@
       </section>
 
       <section class="app-row">
+        <div class="poster duobaotabei">
+          <img class="poster-glyph-bg" src="/duobaotabei/assets/ta-watermark.png" alt="" aria-hidden="true">
+          <div class="status-line">
+            <span class="status-pill" data-i18n="comingSoon">● 即将上架</span>
+          </div>
+
+          <div class="poster-title">
+            <span class="eyebrow" data-i18n="dbtEyebrow">No 02 · Duobaota Stele</span>
+            <h2 data-i18n="dbtTitle">多宝塔碑</h2>
+            <p data-i18n="dbtSub">颜真卿楷书逐字打卡</p>
+          </div>
+        </div>
+
+        <article class="copy">
+          <div class="date-line" data-i18n="dbtDate">2026 秋</div>
+          <h2 data-i18n="dbtHeadline">把一座唐碑，一遍一遍临成自己的</h2>
+          <p data-i18n="dbtBody">颜真卿《多宝塔碑》2018 字铺成一页，写到哪个字点一下即完成打卡。原碑对照临帖、字义与专名注释、每日日签与里程碑统计。无账号无广告，数据保存在你自己的设备与 iCloud。</p>
+          <a class="inline-link" href="https://www.ziyeapp.com/duobaotabei/" data-i18n="viewProduct">» 查看产品页</a>
+        </article>
+
+        <aside class="action">
+          <div>
+            <div class="action-meta">
+              <span>Download</span>
+              <span>iOS · 2026</span>
+            </div>
+            <div class="download-title">App Store</div>
+            <p class="download-sub" data-i18n="dbtSoon">即将上架 · 免费下载</p>
+            <div class="button-stack">
+              <a class="button" href="https://www.ziyeapp.com/duobaotabei/" data-i18n="productDetail">产品详情 →</a>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="app-row">
         <div class="poster percentry">
           <div class="status-line">
             <span class="status-pill" data-i18n="live">● 已上线</span>
           </div>
           <img class="poster-logo-bg" src="/percentry/assets/icon-tight.png" alt="">
           <div class="poster-title">
-            <span class="eyebrow">No 02 · Percentry</span>
+            <span class="eyebrow">No 03 · Percentry</span>
             <h2>Percentry</h2>
             <p data-i18n="percentrySub">方便查看 AI 额度余量</p>
           </div>
@@ -853,7 +929,7 @@
             <span class="status-pill" data-i18n="designing">设计中</span>
           </div>
           <div class="poster-title">
-            <span class="eyebrow">No 03 · Self Log</span>
+            <span class="eyebrow">No 04 · Self Log</span>
             <h2 data-i18n="idea1">一分钟记录自己的 App</h2>
             <p data-i18n="idea1Sub">关于自我的轻量日志</p>
           </div>
@@ -887,7 +963,7 @@
             <span class="status-pill" data-i18n="designing">设计中</span>
           </div>
           <div class="poster-title">
-            <span class="eyebrow">No 04 · Brain Game</span>
+            <span class="eyebrow">No 05 · Brain Game</span>
             <h2 data-i18n="idea2">每天脑锻炼小游戏</h2>
             <p data-i18n="idea2Sub">三分钟的轻量小游戏</p>
           </div>
@@ -897,37 +973,6 @@
           <div class="date-line">2026 · 设计中</div>
           <h2 data-i18n="idea2Headline">脑锻炼小游戏：由易到难，保持脑活跃</h2>
           <p data-i18n="idea2Body">每天 3 个难度的谜题。可对战，可单机，全球排行。</p>
-          <div class="coming-label" data-i18n="designing">设计中</div>
-        </article>
-
-        <aside class="action soon-only">
-          <div class="download-title">Coming<br>Soon.</div>
-        </aside>
-      </section>
-
-      <section class="app-row">
-        <div class="poster next">
-          <div class="status-line">
-            <div class="app-icon next-icon" aria-hidden="true">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path d="M31 7l10 10-20 20-12 4 4-12L31 7z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                <path d="M28 10l10 10M13 29l6 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                <path d="M7 42c5-2 10-2 16 0 6 2 11 1 18-2" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.62"/>
-              </svg>
-            </div>
-            <span class="status-pill" data-i18n="designing">设计中</span>
-          </div>
-          <div class="poster-title">
-            <span class="eyebrow">No 05 · Handwriting</span>
-            <h2 data-i18n="idea3">练字记录 App</h2>
-            <p data-i18n="idea3Sub">给坚持练字的人的陪伴</p>
-          </div>
-        </div>
-
-        <article class="copy coming-copy">
-          <div class="date-line">2026 · 设计中</div>
-          <h2 data-i18n="idea3Headline">练字记录 App：一切有迹可循</h2>
-          <p data-i18n="idea3Body">还在设计中～</p>
           <div class="coming-label" data-i18n="designing">设计中</div>
         </article>
 
@@ -965,6 +1010,14 @@
         freeDownload: '免费下载',
         downloadApp: ' 下载 App ↗',
         productDetail: '产品详情 →',
+        comingSoon: '● 即将上架',
+        dbtEyebrow: 'No 02 · Duobaota Stele',
+        dbtTitle: '多宝塔碑',
+        dbtSub: '颜真卿楷书逐字打卡',
+        dbtDate: '2026 秋',
+        dbtHeadline: '把一座唐碑，一遍一遍临成自己的',
+        dbtBody: '颜真卿《多宝塔碑》2018 字铺成一页，写到哪个字点一下即完成打卡。原碑对照临帖、字义与专名注释、每日日签与里程碑统计。无账号无广告，数据保存在你自己的设备与 iCloud。',
+        dbtSoon: '即将上架 · 免费下载',
         percentrySub: '方便查看 AI 额度余量',
         percentryDate: '2026 夏',
         percentryHeadline: 'Codex 与 Claude 的额度余量和重置时间',
@@ -979,10 +1032,6 @@
         idea2Sub: '三分钟的轻量小游戏',
         idea2Headline: '脑锻炼小游戏：由易到难，保持脑活跃',
         idea2Body: '每天 3 个难度的谜题。可对战，可单机，全球排行。',
-        idea3: '练字记录 App',
-        idea3Sub: '给坚持练字的人的陪伴',
-        idea3Headline: '练字记录 App：一切有迹可循',
-        idea3Body: '还在设计中～',
         designing: '设计中',
         aboutTitle: '关于 ZIYE',
         aboutBody: '手帐er、独立单机游戏爱好者，喜欢做工具类的产品。',
@@ -1003,6 +1052,14 @@
         freeDownload: 'Free download',
         downloadApp: ' Download App ↗',
         productDetail: 'Product details →',
+        comingSoon: '● Coming soon',
+        dbtEyebrow: 'No 02 · Duobao Pagoda Stele',
+        dbtTitle: 'Duobao Pagoda Stele',
+        dbtSub: 'Copy a Tang stele, character by character',
+        dbtDate: 'Fall 2026',
+        dbtHeadline: 'Make a Tang dynasty masterpiece your daily practice.',
+        dbtBody: "All 2,018 characters of Yan Zhenqing's Duobao Pagoda Stele laid out on one page — tap the last character you wrote to check in. Practice against the original rubbing, read annotations, collect daily cards and milestones. No account, no ads; your data stays on your device and your iCloud.",
+        dbtSoon: 'Coming soon · Free',
         percentrySub: 'AI quota at a glance',
         percentryDate: 'Summer 2026',
         percentryHeadline: 'Codex and Claude quota remaining and reset times.',
@@ -1017,10 +1074,6 @@
         idea2Sub: 'A three-minute casual brain game',
         idea2Headline: 'Brain training mini games: from easy to hard, keep your mind active.',
         idea2Body: 'Three puzzle difficulties every day. Play solo, compete with others, and climb global rankings.',
-        idea3: 'Handwriting practice log',
-        idea3Sub: 'For people who keep practicing',
-        idea3Headline: 'Handwriting practice log: every step can be traced.',
-        idea3Body: 'Still in design.',
         designing: 'Design',
         aboutTitle: 'About ZIYE',
         aboutBody: 'A stationery journal user and indie single-player game enthusiast who likes making practical tool products.',
@@ -1041,6 +1094,14 @@
         freeDownload: '無料ダウンロード',
         downloadApp: ' Appをダウンロード ↗',
         productDetail: '製品詳細 →',
+        comingSoon: '● 近日公開',
+        dbtEyebrow: 'No 02 · 多宝塔碑',
+        dbtTitle: '多宝塔碑',
+        dbtSub: '顔真卿の楷書を一字ずつ記録',
+        dbtDate: '2026 秋',
+        dbtHeadline: '唐代の名碑を、毎日すこしずつ自分のものに',
+        dbtBody: '顔真卿『多宝塔碑』全 2018 字を一枚に。今日書いた字をタップするだけでチェックイン。原拓との対照臨書、語句注釈、日めくりカードと里程標の統計。アカウント不要・広告なし、データは端末とあなたの iCloud にのみ保存。',
+        dbtSoon: '近日公開 · 無料',
         percentrySub: 'AI 利用枠をひと目で確認',
         percentryDate: '2026 夏',
         percentryHeadline: 'Codex と Claude の残り利用枠とリセット時刻。',
@@ -1055,10 +1116,6 @@
         idea2Sub: '3分の軽いミニゲーム',
         idea2Headline: '脳トレミニゲーム：やさしい問題から難しい問題へ。',
         idea2Body: '毎日3つの難易度のパズル。対戦、ソロ、グローバルランキングに対応予定。',
-        idea3: 'ペン字記録 App',
-        idea3Sub: '練習を続ける人のために',
-        idea3Headline: 'ペン字記録 App：積み重ねが見える。',
-        idea3Body: 'まだ設計中です。',
         designing: '設計中',
         aboutTitle: 'ZIYEについて',
         aboutBody: '手帳好き、インディーの一人用ゲーム好き。便利なツール系プロダクトを作るのが好きです。',
