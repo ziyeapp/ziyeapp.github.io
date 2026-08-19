@@ -181,7 +181,10 @@ h2 {
   margin-bottom: 10px;
 }
 .why p:last-of-type { margin-bottom: 0; }
+.why p b { color: var(--red); font-weight: 700; }
+.why p em { font-style: italic; color: var(--text-sub); }
 .why .src { font-size: 13px; color: var(--text-muted); margin-top: 14px; font-family: -apple-system, "PingFang SC", sans-serif; }
+.why .src a { color: var(--text-sub); text-decoration: underline; }
 
 /* 截图长卷：无缝循环横向滚动（轨道复制一份，位移 -50% 循环），悬停/按住暂停 */
 .shots-viewport {
@@ -327,10 +330,11 @@ footer {
 <section style="padding-top: 30px; padding-bottom: 30px;">
   <div class="section-inner">
     <div class="why">
-      <p>《多宝塔碑》，唐天宝十一载立于长安，颜真卿四十四岁书。</p>
-      <p>千年来公认的楷书入门第一碑，学书法的人几乎都从它开始。</p>
-      <p>这个 App 只做一件事：帮你把这 2018 个字，一遍一遍临成自己的。</p>
-      <p class="src">碑石现藏西安碑林 · App 内单字图取自公有领域拓本，2000 余格逐字人工校对</p>
+      <p>唐天宝十一年，<b>颜真卿</b>四十四岁，写下这通《多宝塔碑》——楷书两千零一十八字，笔笔藏锋，法度谨严。</p>
+      <p><em>苏轼曾言"书至于颜鲁公，而古今之变、天下之能事毕矣"。</em></p>
+      <p>它是颜真卿早年功力最盛之作，尚未定型为后来的雄浑，却字字精到、气息完整——正因如此，历代都以它为<b>楷书入门第一帖</b>。</p>
+      <p>这个 App 帮助你将这 2018 个字，一遍一遍临成自己的。</p>
+      <p class="src">2000 余格逐字人工校对 · 字帖图像来源：<a href="https://colbase.nich.go.jp/collection_items/tnm/TB-1371" target="_blank" rel="noopener">ColBase</a></p>
     </div>
   </div>
 </section>
@@ -407,7 +411,7 @@ footer {
           <span class="footer-logo"><img src="assets/logo.png" alt=""></span>
           多宝塔碑
         </div>
-        <p>写到哪，点到哪。愿你日拱一卒，写完这 2018 个字。</p>
+        <p>点击记录 通临陪伴</p>
       </div>
       <div class="footer-links">
         <h4>页面</h4>
